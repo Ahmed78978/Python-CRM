@@ -93,6 +93,7 @@ def update_database():
     global previous_email_content
     new_email_content = read_and_skip_flagged_emails()
     if new_email_content != previous_email_content:
+       try:
         payment_from_name = re.search(r"Payment from \$(\w+)", new_email_content)
         if payment_from_name:
             payment_from_name = payment_from_name.group(1)
@@ -118,7 +119,8 @@ def update_database():
                                               customer_id=customer.id)
                 db.session.add(new_transaction)
                 db.session.commit()
-
+       except:
+           pass
     # Update previous_email_content with the new email content
     previous_email_content = new_email_content
 class Customer(db.Model):
