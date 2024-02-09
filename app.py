@@ -87,7 +87,7 @@ previous_email_content = None
 
 
 # Define the job to read emails and update database
-@scheduler.task('interval', id='update_database', minutes=1)
+@scheduler.task('interval', id='update_database', minutes=15)
 def update_database():
   with app.app_context():
     global previous_email_content
