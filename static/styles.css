@@ -1,0 +1,293 @@
+/* General body styling */
+/* General body and header styling */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #333;
+    color: #ffffff;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+nav ul li {
+    display: inline-block;
+    margin-left: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+nav ul li a:hover, nav ul li a.active {
+    background-color: #4A90E2;
+}
+
+/* Styling for the 'Add User Record' button */
+.btn-primary {
+    background-color: #007bff;
+    color: #ffffff;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    nav ul li {
+        display: block;
+        margin: 10px 0;
+    }
+}
+
+
+/* Styling for the h1 tag */
+h1 {
+    color: #4A90E2; /* A pleasant shade of blue */
+    text-align: center;
+}
+
+/* Styling for the paragraph */
+p {
+    font-size: 16px;
+    line-height: 1.6;
+    text-align: center;
+}
+
+/* Styling for the logout link */
+a {
+    display: inline-block;
+    background-color: #4A90E2;
+    color: #ffffff;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 20px; /* Add some space above the logout link */
+    text-align: center;
+}
+
+a:hover {
+    background-color: #357ABD; /* Darker shade of blue on hover */
+}
+/* General form styling */
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling for input fields */
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px; /* Space between the inputs */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* Makes sure the padding doesn't affect the total width */
+}
+
+/* Focus effect on inputs */
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: #4A90E2;
+    outline: none; /* Removes the default focus outline and replaces it with a border color */
+}
+
+/* Styling for the submit button */
+button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #4A90E2; /* Matching the focus color */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer; /* Changes the mouse cursor to a pointer */
+    font-size: 16px; /* Increases font size for better readability */
+}
+
+/* Hover effect for the button */
+button[type="submit"]:hover {
+    background-color: #357ABD; /* A darker shade of the button color */
+}
+
+/* General styling for the admin dashboard table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px; /* Adds some space above the table */
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+th, td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #ddd; /* Adds a subtle line between rows */
+}
+
+th {
+    background-color: #4A90E2;
+    color: white;
+}
+
+/* Styling for form elements within the table */
+form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+input[type="number"] {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    width: auto; /* Adjusts width based on the content */
+}
+
+button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+/* Enhances visibility and interaction */
+td:hover {
+    background-color: #f5f5f5;
+}
+
+/* Responsive table styling */
+@media screen and (max-width: 600px) {
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    th, td {
+        text-align: right;
+        padding-left: 50%; /* Ensures text doesn't overlap */
+    }
+
+    th {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+
+    tr { border: 1px solid #ccc; }
+
+    td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+    }
+
+    td:before {
+        /* Now like a table header */
+        position: absolute;
+        /* Top/left values mimic padding */
+        left: 10px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        content: attr(data-label);
+    }
+}
+
+/* General form styling */
+form {
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+display: block;
+}
+
+form label {
+    display: block;
+    margin-top: -10px;
+    font-weight: bold;
+    width: 550px;
+}
+
+form input[type="number"],
+form select {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+form input[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #4A90E2;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+form input[type="submit"]:hover {
+    background-color: #357ABD;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    form {
+        width: auto;
+        margin: 20px;
+    }
+}
+/* General style for the error message container */
+#error {
+    background-color: #ffdddd;
+    border-left: 6px solid #f44336;
+    margin: 20px 0;
+    padding: 10px 20px;
+    color: #333;
+    border-radius: 4px;
+}
+
+/* Style for individual error messages */
+#error_msg {
+    font-size: 16px;
+    color: #d8000c;
+    margin-top: 5px;
+}

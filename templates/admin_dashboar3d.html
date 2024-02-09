@@ -1,0 +1,26 @@
+<!-- Register.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Manage Customer</h2>
+    <form action="/admin/customer" method="post">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="opening_balance">Opening Balance:</label>
+            <input type="number" step="0.01" class="form-control" id="opening_balance" name="opening_balance" required>
+        </div>
+        <div class="form-group">
+            <label for="daily_rate">Daily Rate:</label>
+            <input type="number" step="0.01" class="form-control" id="daily_rate" name="daily_rate" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+{% endblock %}

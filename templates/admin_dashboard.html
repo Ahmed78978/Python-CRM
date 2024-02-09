@@ -1,0 +1,27 @@
+<!-- Register.html -->
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Admin Dashboard</h1>
+    <table>
+        <tr>
+            <th>Customer Name</th>
+            <th>Email</th>
+            <th>Current Balance</th>
+            <th>Update Balance</th>
+        </tr>
+        {% for customer in customers %}
+        <tr>
+            <td>{{ customer.name }}</td>
+            <td>{{ customer.email }}</td>
+            <td>${{ customer.current_balance }}</td>
+            <td>
+                <form action="/admin/update_balance/{{ customer.id }}" method="post">
+                    <input type="number" name="payment" step="0.01" placeholder="Enter payment amount">
+                    <button type="submit">Update Balance</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

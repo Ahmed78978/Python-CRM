@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Dashboard</h1>
+<p>Current Balance: {{ customer.current_balance }}</p>
+
+<h3>Transaction Log</h3>
+<div id=trans>
+<table>
+    <tr>
+        <th>Date</th>
+        <th>Description</th>
+        <th>Amount</th>
+    </tr>
+    {% for transaction in transactions %}
+    <tr>
+        <td>{{ transaction.date }}</td>
+        <td>{{ transaction.description }}</td>
+        <td>{{ transaction.amount }}</td>
+    </tr>
+    {% endfor %}
+</table>
+</div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Edit Customer Details</h2>
+<form action="{{ url_for('admin_customer', customer_id=customer.id) }}" method="post">
+    <label for="name">Customer Name:</label>
+    <input type="text" id="name" name="name" value="{{ customer.name }}" readonly>
+
+    <label for="email">Customer Email:</label>
+    <input type="email" id="email" name="email" value="{{ customer.email }}" readonly>
+
+    <label for="opening_balance">Opening Balance:</label>
+    <input type="number" id="opening_balance" name="opening_balance" value="{{ customer.opening_balance }}" step="0.01" required>
+
+    <label for="daily_rate">Daily Rate:</label>
+    <input type="number" id="daily_rate" name="daily_rate" value="{{ customer.daily_rate }}" step="0.01" required>
+
+    <input type="submit" value="Update Customer">
+</form>
+{% endblock %}

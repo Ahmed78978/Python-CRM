@@ -1,0 +1,39 @@
+<!-- Register.html -->
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Register</h1>
+    <form action="/register" method="post">
+        <div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+		<div>
+         <label for="cashapp">CashApp Username:</label>
+         <input type="text" id="cashapp" name="cashapp">
+        </div>
+
+        <div>
+            <label for="role">Role:</label>
+            <select id="role" name="role">
+                <option value="customer">Customer</option>
+                <option value="admin">Admin</option>
+            </select>
+        </div>
+        <button type="submit">Register</button>
+    </form>
+    <p>Already have an account? <a href="/login">Login here</a></p>
+	{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div id=error>
+    {% for message in messages %}
+      <div id=error_msg>{{ message }}</div>
+    {% endfor %}
+	</div>
+  {% endif %}
+{% endwith %}
+{% endblock %}

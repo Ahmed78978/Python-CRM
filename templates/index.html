@@ -1,0 +1,10 @@
+<!-- Register.html -->
+{% extends "base.html" %}
+<link rel="stylesheet" href="path/to/your/styles.css">
+
+
+{% block content %}
+    <h1>Welcome, {{ username }}!</h1>
+    <p>Your role is: {{ role }}</p>
+    <a href="/logout">Logout</a>
+{% endblock %}

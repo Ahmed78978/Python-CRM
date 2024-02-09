@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    <form action="/login" method="post">
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+    </form>
+	{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div id=error>
+    {% for message in messages %}
+      <div id=error_msg>{{ message }}</div>
+    {% endfor %}
+	</div>
+  {% endif %}
+{% endwith %}
+{% endblock %}

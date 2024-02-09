@@ -1,0 +1,22 @@
+<!-- add_customer.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Add or Update Customer Record</h1>
+<form action="{{ url_for('add_customer') }}" method="post">
+    <label for="customer">Select Customer:</label>
+    <select name="customer" id="customer" required>
+        {% for customer in customers %}
+        <option value="{{ customer.id }}">{{ customer.name }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="opening_balance">Opening Balance:</label>
+    <input type="number" id="opening_balance" name="opening_balance" step="0.01" required>
+
+    <label for="daily_rate">Daily Rate:</label>
+    <input type="number" id="daily_rate" name="daily_rate" step="0.01" required>
+
+    <input type="submit" value="Update Customer">
+</form>
+{% endblock %}
