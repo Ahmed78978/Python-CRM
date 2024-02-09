@@ -5,3 +5,4 @@ Flask-APScheduler
 Werkzeug
 SQLAlchemy
 email-validator
+gunicorn
