@@ -1,293 +1,289 @@
-/* General body styling */
-/* General body and header styling */
+/* General Styles */
 body {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-}
-
-header {
-    background-color: #333;
-    color: #ffffff;
-    padding-top: 20px;
-    padding-bottom: 20px;
-}
-
-nav ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    text-align: center;
-}
-
-nav ul li {
-    display: inline-block;
-    margin-left: 20px;
-}
-
-nav ul li a {
-    text-decoration: none;
-    color: #fff;
-    padding: 10px 15px;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-}
-
-nav ul li a:hover, nav ul li a.active {
-    background-color: #4A90E2;
-}
-
-/* Styling for the 'Add User Record' button */
-.btn-primary {
-    background-color: #007bff;
-    color: #ffffff;
-    padding: 10px 15px;
-    text-decoration: none;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-}
-
-.btn-primary:hover {
-    background-color: #0056b3;
-}
-
-/* Responsive adjustments */
-@media (max-width: 600px) {
-    nav ul li {
-        display: block;
-        margin: 10px 0;
-    }
-}
-
-
-/* Styling for the h1 tag */
-h1 {
-    color: #4A90E2; /* A pleasant shade of blue */
-    text-align: center;
-}
-
-/* Styling for the paragraph */
-p {
-    font-size: 16px;
-    line-height: 1.6;
-    text-align: center;
-}
-
-/* Styling for the logout link */
-a {
-    display: inline-block;
-    background-color: #4A90E2;
-    color: #ffffff;
-    padding: 10px 15px;
-    text-decoration: none;
-    border-radius: 5px;
-    margin-top: 20px; /* Add some space above the logout link */
-    text-align: center;
-}
-
-a:hover {
-    background-color: #357ABD; /* Darker shade of blue on hover */
-}
-/* General form styling */
-form {
-    max-width: 400px;
-    margin: 0 auto;
     padding: 20px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #f4f4f4;
+    color: #333;
 }
 
-/* Styling for input fields */
-input[type="text"],
-input[type="password"] {
+h1 {
+    font-size: 24px; /* Responsive font size */
+}
+
+.search-container input[type="text"] {
     width: 100%;
     padding: 10px;
-    margin-bottom: 20px; /* Space between the inputs */
+    margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    box-sizing: border-box; /* Makes sure the padding doesn't affect the total width */
 }
 
-/* Focus effect on inputs */
-input[type="text"]:focus,
-input[type="password"]:focus {
-    border-color: #4A90E2;
-    outline: none; /* Removes the default focus outline and replaces it with a border color */
-}
-
-/* Styling for the submit button */
-button[type="submit"] {
-    width: 100%;
-    padding: 10px;
-    background-color: #4A90E2; /* Matching the focus color */
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer; /* Changes the mouse cursor to a pointer */
-    font-size: 16px; /* Increases font size for better readability */
-}
-
-/* Hover effect for the button */
-button[type="submit"]:hover {
-    background-color: #357ABD; /* A darker shade of the button color */
-}
-
-/* General styling for the admin dashboard table */
+/* Table Styles */
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px; /* Adds some space above the table */
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 th, td {
     text-align: left;
     padding: 12px;
-    border-bottom: 1px solid #ddd; /* Adds a subtle line between rows */
+    border-bottom: 1px solid #ddd;
 }
 
 th {
-    background-color: #4A90E2;
-    color: white;
+    background-color: #f2f2f2;
 }
 
-/* Styling for form elements within the table */
-form {
-    display: flex;
-    gap: 10px;
-    align-items: center;
+tr:nth-child(even) {
+    background-color: #f9f9f9;
 }
 
-input[type="number"] {
-    padding: 8px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    width: auto; /* Adjusts width based on the content */
-}
-
-button[type="submit"] {
-    background-color: #007bff;
+/* Button Styles */
+button {
+    padding: 8px 12px;
+    background-color: #4CAF50;
     color: white;
     border: none;
-    padding: 8px 16px;
     border-radius: 4px;
     cursor: pointer;
 }
 
-button[type="submit"]:hover {
-    background-color: #0056b3;
+button:hover {
+    background-color: #45a049;
 }
 
-/* Enhances visibility and interaction */
-td:hover {
-    background-color: #f5f5f5;
+/* Edit Form Styles */
+.edit-form {
+    background-color: #fff;
+    padding: 20px;
+    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-radius: 4px;
 }
 
-/* Responsive table styling */
-@media screen and (max-width: 600px) {
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
     table, thead, tbody, th, td, tr {
         display: block;
     }
 
-    th, td {
-        text-align: right;
-        padding-left: 50%; /* Ensures text doesn't overlap */
-    }
-
-    th {
+    thead tr {
         position: absolute;
         top: -9999px;
         left: -9999px;
     }
 
-    tr { border: 1px solid #ccc; }
+    tr {
+        margin: 0 0 20px 0;
+    }
 
     td {
         border: none;
-        border-bottom: 1px solid #eee;
         position: relative;
         padding-left: 50%;
+        text-align: right;
     }
 
     td:before {
-        /* Now like a table header */
         position: absolute;
-        /* Top/left values mimic padding */
+        top: 12px;
         left: 10px;
         width: 45%;
         padding-right: 10px;
         white-space: nowrap;
-        content: attr(data-label);
+        text-align: left;
+        font-weight: bold;
+    }
+
+    /* Label the data */
+    td:nth-of-type(1):before { content: "Customer Name"; }
+    td:nth-of-type(2):before { content: "Email"; }
+    td:nth-of-type(3):before { content: "Current Balance"; }
+    td:nth-of-type(4):before { content: "Update Balance"; }
+
+    .edit-form form {
+        flex-direction: column;
     }
 }
 
-/* General form styling */
-form {
-    max-width: 1000px;
-    margin: 20px auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-display: block;
-}
-
-form label {
-    display: block;
-    margin-top: -10px;
-    font-weight: bold;
-    width: 550px;
-}
-
-form input[type="number"],
-form select {
+/* Improving form accessibility on mobile */
+.edit-form input[type="number"], .edit-form button {
     width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
+    margin: 5px 0;
 }
 
-form input[type="submit"] {
-    width: 100%;
-    padding: 10px;
+
+header nav ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    justify-content: center; /* Center the navigation items */
+}
+
+header nav ul li {
+    margin: 0 10px; /* Spacing between items */
+}
+
+header nav ul li a {
+    text-decoration: none;
+    color: #000; /* Adjust based on your color scheme */
+}
+.btn {
+    background-color: #1a73e8; /* Google Blue */
+    color: white;
+    padding: 10px 20px;
     border: none;
     border-radius: 4px;
-    background-color: #4A90E2;
-    color: white;
     cursor: pointer;
-    font-size: 16px;
+    transition: background-color 0.3s ease;
 }
 
-form input[type="submit"]:hover {
-    background-color: #357ABD;
+.btn:hover {
+    background-color: #1669d8; /* Darker shade for hover effect */
+}
+.container {
+    display: flex;
+    flex-wrap: wrap;
 }
 
-/* Responsive Design */
+.column {
+    flex: 50%; /* Adjust based on your preferred column width */
+}
+
 @media (max-width: 768px) {
-    form {
-        width: auto;
-        margin: 20px;
+    .column {
+        flex: 100%; /* Stack columns vertically on smaller screens */
     }
 }
-/* General style for the error message container */
-#error {
-    background-color: #ffdddd;
-    border-left: 6px solid #f44336;
-    margin: 20px 0;
-    padding: 10px 20px;
-    color: #333;
-    border-radius: 4px;
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Ensures consistent spacing between form elements */
+    max-width: 500px; /* Adjust based on preference */
+    margin: auto; /* Center the form on the page */
+}
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
 }
 
-/* Style for individual error messages */
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px; /* Rounded corners */
+}
+select {
+    width: 100%;
+    padding: 10px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-appearance: none; /* Removes default styling */
+    -moz-appearance: none;
+    appearance: none; /* Enables custom arrow styling */
+}
+input[type="submit"] {
+    background-color: #1a73e8; /* Google Blue */
+    color: white;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+input[type="submit"]:hover {
+    background-color: #1669d8; /* A slightly darker blue for hover effect */
+}
+input[type="text"],
+input[type="password"] {
+    width: 100%; /* Full width */
+    padding: 10px; /* Ample padding */
+    margin: 8px 0; /* Space out elements */
+    display: inline-block; /* Ensures proper alignment */
+    border: 1px solid #ccc; /* Subtle border */
+    border-radius: 4px; /* Rounded corners for a modern look */
+    box-sizing: border-box; /* Box sizing */
+}
+button[type="submit"] {
+    width: 100%;
+    background-color: #4CAF50; /* A pleasant green */
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049; /* Slightly darker shade on hover */
+}
+#error {
+    color: #D8000C; /* Error color */
+    background-color: #FFD2D2; /* Light background to highlight error */
+    margin: 8px 0;
+    padding: 10px;
+    border-radius: 4px; /* Consistency in design */
+}
+
 #error_msg {
-    font-size: 16px;
-    color: #d8000c;
-    margin-top: 5px;
+    margin: 0;
+    padding: 0;
+    list-style-type: none; /* Removes bullet points if used in a list */
+}
+form div {
+    margin-bottom: 20px; /* Spacing between form fields */
+}
+
+label {
+    display: block; /* Ensures the label takes up its own line */
+    margin-bottom: 5px; /* Spacing between label and input field */
+    font-weight: bold; /* Makes label text stand out */
+}
+input[type="text"],
+input[type="password"],
+select {
+    width: 100%; /* Ensures full-width inputs and select */
+    padding: 10px; /* Ample padding for easier interaction */
+    margin: 5px 0 20px 0; /* Space out elements */
+    display: inline-block;
+    border: 1px solid #ccc; /* Subtle border */
+    border-radius: 4px; /* Adds rounded corners for a modern look */
+    box-sizing: border-box; /* Ensures padding doesn't affect overall width */
+}
+button[type="submit"] {
+    background-color: #4CAF50; /* A friendly, inviting green */
+    color: white;
+    padding: 12px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px; /* Rounded corners for visual appeal */
+    cursor: pointer; /* Indicates the button is clickable */
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049; /* Darker shade for hover effect */
+}
+#error {
+    color: #D8000C; /* Distinct color for errors */
+    background-color: #FFD2D2; /* Soft background to highlight errors */
+    padding: 10px;
+    border-radius: 4px; /* Soft edges */
+    margin: 20px 0; /* Proper spacing from form */
+}
+
+#error_msg {
+    margin: 10px 0;
 }

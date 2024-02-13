@@ -22,8 +22,8 @@ import email
 import re
 from email.header import decode_header
 host = "imap.gmail.com"
-user='ahmedzahid60@gmail.com'
-passa='vmgturugwuqxsool'
+user='paycarrent88@gmail.com'
+passa='yraqquqhosjuhblh'
 
 
 def read_and_skip_flagged_emails(count=3, contain_body=True, mail_server='imap.gmail.com', user=user,
@@ -87,7 +87,7 @@ previous_email_content = None
 
 
 # Define the job to read emails and update database
-@scheduler.task('interval', id='update_database', minutes=15)
+@scheduler.task('interval', id='update_database', minutes=1)
 def update_database():
   with app.app_context():
     global previous_email_content

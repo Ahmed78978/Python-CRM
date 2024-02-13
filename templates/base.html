@@ -13,16 +13,16 @@
     <header>
         <nav>
             <ul>
-                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('index') }}"class="btn btn-primary">Home</a></li>
                 {% if current_user.is_authenticated %}
                     {% if current_user.is_admin %}
-                        <li><a href="{{ url_for('admin_dashboard') }}">Admin Dashboard</a></li>
-						 <a href="{{ url_for('add_customer') }}" class="btn btn-primary">Add User Record</a>
+                        <li><a href="{{ url_for('admin_dashboard') }}"class="btn btn-primary">Admin Dashboard</a></li>
+						 <li><a href="{{ url_for('add_customer') }}" class="btn btn-primary">Add User Record</a></li>
                     {% endif %}
-                    <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                    <li><a href="{{ url_for('logout') }}" class="btn btn-primary">Logout</a></li>
                 {% else %}
-                    <li><a href="{{ url_for('login') }}">Login</a></li>
-                    <li><a href="{{ url_for('register') }}">Register</a></li>
+                    <li><a href="{{ url_for('login') }}" class="btn btn-primary">Login</a></li>
+                    <li><a href="{{ url_for('register') }}" class="btn btn-primary">Register</a></li>
                 {% endif %}
             </ul>
         </nav>

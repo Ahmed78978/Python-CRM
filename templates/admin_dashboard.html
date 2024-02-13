@@ -1,27 +1,83 @@
-<!-- Register.html -->
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Admin Dashboard</h1>
-    <table>
+<div class="search-container">
+    <input type="text" id="searchInput" placeholder="Search by name..." onkeyup="searchTable()">
+</div>
+
+<h1>Admin Dashboard</h1>
+<table id="customersTable">
+    <thead>
         <tr>
             <th>Customer Name</th>
             <th>Email</th>
             <th>Current Balance</th>
             <th>Update Balance</th>
         </tr>
+    </thead>
+    <tbody>
         {% for customer in customers %}
-        <tr>
-            <td>{{ customer.name }}</td>
-            <td>{{ customer.email }}</td>
-            <td>${{ customer.current_balance }}</td>
+        <tr class="customer-row" data-customer-id="{{ customer.id }}">
+            <td data-label="Customer Name">{{ customer.name }}</td>
+            <td data-label="Customer Email">{{ customer.email }}</td>
+            <td data-label="Customer Balance">${{ customer.current_balance }}</td>
             <td>
-                <form action="/admin/update_balance/{{ customer.id }}" method="post">
-                    <input type="number" name="payment" step="0.01" placeholder="Enter payment amount">
-                    <button type="submit">Update Balance</button>
-                </form>
+                <button class="edit-btn">Edit Balance</button>
             </td>
         </tr>
         {% endfor %}
-    </table>
+    </tbody>
+</table>
+
+{% for customer in customers %}
+<div class="edit-form" id="form-{{ customer.id }}" style="display: none;">
+    <form action="/admin/update_balance/{{ customer.id }}" method="post">
+        <input type="number" name="payment" step="0.01" placeholder="Enter payment amount">
+        <button type="submit">Update Balance</button>
+        <button type="button" onclick="closeForm({{ customer.id }})">Cancel</button>
+    </form>
+</div>
+{% endfor %}
+
+<script>
+
+
+function searchTable() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("searchInput");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("customersTable");
+    tr = table.getElementsByTagName("tr");
+    
+    for (i = 1; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+            txtValue = td.textContent || td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }       
+    }
+}
+
+document.querySelectorAll('.customer-row').forEach(row => {
+    row.addEventListener('click', () => {
+        var customerId = row.getAttribute('data-customer-id');
+        var form = document.getElementById('form-' + customerId);
+        var isDisplayed = form.style.display === 'block';
+        // Hide all other forms
+        document.querySelectorAll('.edit-form').forEach(f => f.style.display = 'none');
+        // Toggle the clicked form
+        form.style.display = isDisplayed ? 'none' : 'block';
+    });
+});
+
+function closeForm(customerId) {
+    document.getElementById('form-' + customerId).style.display = 'none';
+}
+
+
+</script>
 {% endblock %}
