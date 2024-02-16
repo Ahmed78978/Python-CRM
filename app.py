@@ -25,14 +25,7 @@ host = "imap.gmail.com"
 user='paycarrent88@gmail.com'
 passa='yraqquqhosjuhblh'
 
-from memory_profiler import profile
 
-@profile
-def my_function():
-    a = [1] * (10 ** 6)
-    b = [2] * (2 * 10 ** 7)
-    del b
-    return a
 
 def read_and_skip_flagged_emails(count=3, contain_body=True, mail_server='imap.gmail.com', user=user,
                                  passa=passa):
