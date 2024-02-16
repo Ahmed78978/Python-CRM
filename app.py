@@ -27,8 +27,7 @@ passa='yraqquqhosjuhblh'
 
 
 
-def read_and_skip_flagged_emails(count=3, contain_body=True, mail_server='imap.gmail.com', user=user,
-                                 passa=passa):
+def read_and_skip_flagged_emails(count=3, contain_body=True, mail_server='imap.gmail.com', user=user,passa=passa):
     # Connect to the server
     mail = imaplib.IMAP4_SSL(mail_server)
     mail.login(user, passa)
@@ -278,6 +277,7 @@ def login():
 
 
 @app.route('/register', methods=['GET', 'POST'])
+@login_required
 def register():
     if request.method == 'POST':
         username = request.form['username']

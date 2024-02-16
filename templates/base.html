@@ -8,13 +8,18 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <!-- Include Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+  <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">-->
+	
+
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
-                <a class="navbar-brand" href="{{ url_for('index') }}">Paycar Rent</a>
+                <a class="navbar-brand" href="{{ url_for('index') }}">
+    <img src="{{ url_for('static', filename='logo.png') }}" alt="Paycar Rent Logo" height="30">
+</a>
+
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -31,6 +36,9 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ url_for('add_customer') }}"><i class="fas fa-user-plus"></i> Add User Record</a>
                                 </li>
+								<li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('register') }}"><i class="fas fa-user-circle"></i> Register</a>
+                            </li>
                             {% endif %}
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
@@ -39,9 +47,7 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt"></i> Login</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ url_for('register') }}"><i class="fas fa-user-circle"></i> Register</a>
-                            </li>
+                            
                         {% endif %}
                     </ul>
                 </div>

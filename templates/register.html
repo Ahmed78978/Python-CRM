@@ -1,8 +1,75 @@
-<!-- Register.html -->
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Register</h1>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+  body {
+    background-color: #f8f9fa; /* Google Pay's light background color */
+    font-family: 'Roboto', sans-serif;
+  }
+  h1 {
+    color: #202124; /* Google's almost black color */
+    text-align: center;
+    margin-top: 20px;
+  }
+  form {
+    background: #fff;
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(32, 33, 36, 0.28);
+  }
+  form div {
+    margin-bottom: 10px;
+  }
+  form label {
+    display: block;
+    color: #202124;
+    margin-bottom: 5px;
+  }
+  form input[type=text],
+  form input[type=password],
+  form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #dfe1e5;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  form button {
+    width: 100%;
+    padding: 10px;
+    background-color: #1a73e8; /* Google Pay blue for buttons */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+  form button:hover {
+    background-color: #2b7de9; /* Lighter blue on hover */
+  }
+  #error {
+    color: #ea4335; /* Google's red error color */
+    text-align: center;
+    margin-top: 20px;
+  }
+  a {
+    color: #1a73e8;
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: underline;
+  }
+</style>
+
+<div class="container">
+    
     <form action="/register" method="post">
         <div>
             <label for="username">Username:</label>
@@ -12,11 +79,10 @@
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
         </div>
-		<div>
-         <label for="cashapp">CashApp Username:</label>
-         <input type="text" id="cashapp" name="cashapp">
+        <div>
+            <label for="cashapp">CashApp Username:</label>
+            <input type="text" id="cashapp" name="cashapp">
         </div>
-
         <div>
             <label for="role">Role:</label>
             <select id="role" name="role">
@@ -27,13 +93,14 @@
         <button type="submit">Register</button>
     </form>
     <p>Already have an account? <a href="/login">Login here</a></p>
-	{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <div id=error>
-    {% for message in messages %}
-      <div id=error_msg>{{ message }}</div>
-    {% endfor %}
-	</div>
-  {% endif %}
-{% endwith %}
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div id="error">
+        {% for message in messages %}
+          <div id="error_msg">{{ message }}</div>
+        {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+</div>
 {% endblock %}
