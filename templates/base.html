@@ -1,33 +1,61 @@
-<!-- base.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}My Flask App{% endblock %}</title>   
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
-
-
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Paycar Rent{% endblock %}</title>
+    <!-- Include Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Include Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
     <header>
-        <nav>
-            <ul>
-                <li><a href="{{ url_for('index') }}"class="btn btn-primary">Home</a></li>
-                {% if current_user.is_authenticated %}
-                    {% if current_user.is_admin %}
-                        <li><a href="{{ url_for('admin_dashboard') }}"class="btn btn-primary">Admin Dashboard</a></li>
-						 <li><a href="{{ url_for('add_customer') }}" class="btn btn-primary">Add User Record</a></li>
-                    {% endif %}
-                    <li><a href="{{ url_for('logout') }}" class="btn btn-primary">Logout</a></li>
-                {% else %}
-                    <li><a href="{{ url_for('login') }}" class="btn btn-primary">Login</a></li>
-                    <li><a href="{{ url_for('register') }}" class="btn btn-primary">Register</a></li>
-                {% endif %}
-            </ul>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="{{ url_for('index') }}">Paycar Rent</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url_for('index') }}"><i class="fas fa-home"></i> Home</a>
+                        </li>
+                        {% if current_user.is_authenticated %}
+                            {% if current_user.is_admin %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url_for('admin_dashboard') }}"><i class="fas fa-tachometer-alt"></i> Admin Dashboard</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ url_for('add_customer') }}"><i class="fas fa-user-plus"></i> Add User Record</a>
+                                </li>
+                            {% endif %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt"></i> Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url_for('register') }}"><i class="fas fa-user-circle"></i> Register</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
         </nav>
     </header>
 
-    {% block content %}{% endblock %}
+    <main role="main" class="container">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Include Bootstrap JS and its dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

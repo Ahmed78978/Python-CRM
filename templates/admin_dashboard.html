@@ -1,6 +1,147 @@
 {% extends "base.html" %}
 
 {% block content %}
+<style>
+    
+  
+
+    .search-container input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #e0e0e0; /* Light grey border */
+        border-radius: 8px; /* Rounded corners */
+        box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); /* Subtle inner shadow */
+    }
+    .search-container {
+        margin: 1rem;
+    }
+    #searchInput {
+        width: 100%;
+        padding: 0.5rem;
+        margin-bottom: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 0.25rem;
+    }
+    h1 {
+        color: #202124; /* Google's almost black color */
+        text-align: center;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    #customersTable {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1rem;
+    }
+    #customersTable thead {
+        background-color: #f2f2f2;
+    }
+    #customersTable th,
+    #customersTable td {
+        text-align: left;
+        padding: 0.5rem;
+        border: 1px solid #ddd;
+		word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+    #customersTable tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+    .edit-btn {
+        padding: 0.5rem 1rem;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 0.25rem;
+        cursor: pointer;
+    }
+    .edit-btn:hover {
+        background-color: #45a049;
+    }
+    .edit-form {
+        margin: 1rem;
+        padding: 1rem;
+        background-color: #f2f2f2;
+        border: 1px solid #ddd;
+        border-radius: 0.25rem;
+    }
+    .edit-form form {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        align-items: center;
+    }
+    .edit-form input,
+    .edit-form button {
+        padding: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+    .edit-form button {
+        background-color: #1a73e8;
+        color: white;
+        border: none;
+        border-radius: 0.25rem;
+        cursor: pointer;
+    }
+    .edit-form button:hover {
+        background-color: #2b7de9;
+    }
+
+    @media (max-width: 768px) {
+        /* Force table elements to not behave like a table */
+        #customersTable, #customersTable thead, #customersTable tbody, #customersTable th, #customersTable td, #customersTable tr {
+            display: block;
+        }
+
+        /* Hide table headers */
+        #customersTable thead tr {
+            display: none;
+        }
+
+        #customersTable tr { 
+            margin-bottom: 0.5rem;
+            border-bottom: 2px solid #ddd;
+        }
+
+        #customersTable td {
+            /* Make table cells look like blocks */
+            display: block;
+            text-align: left;
+            padding-right: 10px; /* Add some padding for the text */
+            padding-left: 50%;
+            position: relative;
+			white-space: normal;
+        }
+
+        /* Add a label to each cell with the header text */
+        #customersTable td::before {
+            content: attr(data-label); /* Use the data-label attribute value as content */
+            float: left;
+            font-weight: bold;
+            text-transform: uppercase;
+            position: absolute;
+            left: 0.6rem;
+            top: 0.6rem;
+            width: 45%;
+            text-align: left;
+			white-space: nowrap; /* Ensure that header labels don't wrap */
+            overflow: hidden; /* Hide overflow */
+            text-overflow: ellipsis;
+        }
+
+        /* Adjust the button alignment */
+        .edit-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+    }
+</style>
+
+
 <div class="search-container">
     <input type="text" id="searchInput" placeholder="Search by name..." onkeyup="searchTable()">
 </div>
@@ -39,6 +180,7 @@
 </div>
 {% endfor %}
 
+<!-- The existing script can remain as it is -->
 <script>
 
 

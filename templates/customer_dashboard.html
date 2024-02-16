@@ -1,24 +1,133 @@
 {% extends "base.html" %}
 
-{% block content %}
-<h1>Dashboard</h1>
-<p>Current Balance: {{ customer.current_balance }}</p>
+{% block title %}User Dashboard{% endblock %}
 
-<h3>Transaction Log</h3>
-<div id=trans>
-<table>
-    <tr>
-        <th>Date</th>
-        <th>Description</th>
-        <th>Amount</th>
-    </tr>
-    {% for transaction in transactions %}
-    <tr>
-        <td>{{ transaction.date }}</td>
-        <td>{{ transaction.description }}</td>
-        <td>{{ transaction.amount }}</td>
-    </tr>
-    {% endfor %}
-</table>
+{% block content %}
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #f8f9fa;
+        color: #5f6368;
+        margin: 0;
+        padding: 0;
+    }
+    header {
+        background: #ffffff;
+        padding: 1.25rem;
+        text-align: center;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    .balance {
+        background: #ffffff;
+        margin: 1.25rem;
+        padding: 1.25rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+    .balance h2 {
+        color: #202124;
+        margin-bottom: 0;
+    }
+    .balance p {
+        font-size: 1.5rem;
+        font-weight: 700;
+    }
+    .transaction-list {
+        padding: 0 1.25rem;
+    }
+    .transaction {
+        background: #ffffff;
+        margin-bottom: 0.625rem;
+        padding: 0.9375rem;
+        border-radius: 0.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .transaction:last-child {
+        margin-bottom: 0;
+    }
+    .button {
+        background-color: #1a73e8;
+        color: #fff;
+        padding: 0.625rem 1.25rem;
+        border: none;
+        border-radius: 0.25rem;
+        text-transform: uppercase;
+        font-weight: bold;
+        cursor: pointer;
+        outline: none;
+        transition: background-color 0.3s;
+    }
+    .button:hover {
+        background-color: #2b7de9;
+    }
+    .button.outline {
+        background-color: #fff;
+        color: #1a73e8;
+        border: 2px solid #1a73e8;
+    }
+    .button.outline:hover {
+        background-color: #f0f8ff;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+        header {
+            padding: 1rem;
+        }
+        .balance {
+            margin: 1rem;
+            padding: 1rem;
+        }
+        .transaction-list {
+            padding: 0 1rem;
+        }
+        .transaction {
+            padding: 0.75rem;
+        }
+        .button {
+            padding: 0.5rem 1rem;
+        }
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Welcome, {{ customer.name }}!</h1>
+</header>
+
+<div class="balance">
+    <h2>Your current balance is:</h2>
+    <p>$ {{ customer.current_balance }}</p>
+    <button class="button">Pay</button>
 </div>
+
+<div class="transaction-list">
+    <h3>Transaction Log</h3>
+    {% if transactions %}
+        {% for transaction in transactions %}
+            <div class="transaction">
+                <div>
+                    <p>{{ transaction.date }}</p>
+                    <p>{{ transaction.description }}</p>
+                </div>
+                <p>${{ transaction.amount }}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No transactions found.</p>
+    {% endif %}
+</div>
+
+<!-- ... additional content ... -->
+
+</body>
+</html>
 {% endblock %}

@@ -1,31 +1,96 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- ... other head elements ... -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: #5f6368;
+            background-color: #f8f9fa;
+        }
+        header {
+            background: #fff;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .balance {
+            background: #fff;
+            margin: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .balance h2 {
+            color: #202124;
+            margin-bottom: 0;
+        }
+        .transaction-list {
+            padding: 0 20px;
+        }
+        .transaction {
+            background: #fff;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .transaction:last-child {
+            margin-bottom: 0;
+        }
+        .button {
+            background-color: #1a73e8;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+        .button.outline {
+            background-color: #fff;
+            color: #1a73e8;
+            border: 1px solid #1a73e8;
+        }
+        /* ... additional styles ... */
+    </style>
+</head>
+<body>
 
-{% block title %}User Dashboard{% endblock %}
+<header>
+    <h1>Welcome, {{ customer.name }}!</h1>
+</header>
 
-{% block content %}
-<h1>User Dashboard</h1>
-<p>Welcome, {{ customer.name }}!</p>
-<p>Your current balance is: ${{ customer.current_balance }}</p>
+<div class="balance">
+    <h2>Your current balance is:</h2>
+    <p>$ {{ customer.current_balance }}</p>
+    <button class="button">Pay</button>
+</div>
 
-<h3>Transaction Log</h3>
-<div id=trans>
-{% if transactions %}
-    <table>
-        <tr>
-            <th>Date</th>
-            <th>Description</th>
-            <th>Amount</th>
-        </tr>
+<div class="transaction-list">
+    <h3>Transaction Log</h3>
+    {% if transactions %}
         {% for transaction in transactions %}
-        <tr>
-            <td>{{ transaction.date }}</td>
-            <td>{{ transaction.description }}</td>
-            <td>{{ transaction.amount }}</td>
-        </tr>
+            <div class="transaction">
+                <div>
+                    <p>{{ transaction.date }}</p>
+                    <p>{{ transaction.description }}</p>
+                </div>
+                <p>${{ transaction.amount }}</p>
+            </div>
         {% endfor %}
-    </table>
-{% else %}
-    <p>No transactions found.</p>
-</div>	
-{% endif %}
-{% endblock %}
+    {% else %}
+        <p>No transactions found.</p>
+    {% endif %}
+</div>
+
+<!-- ... additional content ... -->
+
+</body>
+</html>
