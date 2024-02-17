@@ -99,7 +99,12 @@ def read_and_skip_flagged_emails(count=3, contain_body=True, mail_server='imap.g
 previous_email_content = None
 
 # Define the job to update customer balances daily
-@scheduler.task('interval', id='daily_balance_update', hours=24, misfire_grace_time=900)
+from pytz import timezone
+from datetime import datetime
+
+eastern = timezone('US/Eastern')
+
+@scheduler.task('cron', id='daily_balance_update', hour='0', minute='0', second='0', misfire_grace_time=900)
 def daily_balance_update():
     with app.app_context():
         customers = Customer.query.all()  # Fetch all customer records
