@@ -6,3 +6,4 @@ Werkzeug
 SQLAlchemy
 email-validator
 gunicorn
+pymysql
