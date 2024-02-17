@@ -246,8 +246,8 @@ def update_balance(customer_id):
 
 
 @login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
+def load_user(id):
+    return User.query.get(int(id))
 
 
 @app.route('/')
@@ -266,8 +266,8 @@ def user_dashboard():
     transactions = Transaction.query.filter_by(customer_id=customer.id).order_by(Transaction.date.desc()).all()
     return render_template('user_dashboard.html', customer=customer, transactions=transactions)
 @login_manager.user_loader
-def load_user(user_id):
-    return db.session.get(User, int(user_id))
+def load_user(id):
+    return db.session.get(User, int(id))
 
 
 
