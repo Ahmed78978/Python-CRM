@@ -250,9 +250,7 @@ def update_balance(customer_id):
     return redirect(url_for('admin_dashboard'))
 
 
-@login_manager.user_loader
-def load_user(id):
-    return User.query.get(int(id))
+
 
 
 @app.route('/')
