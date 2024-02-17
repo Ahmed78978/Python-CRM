@@ -1,12 +1,25 @@
-from flask import Flask, render_template, redirect, url_for, request
+
+from flask import Flask, render_template, redirect, url_for, request, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
-from sqlalchemy.orm import sessionmaker
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask import Flask, render_template, redirect, url_for, request, flash
+from datetime import date
 from flask_apscheduler import APScheduler
+# Other imports remain the same...
+
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///users.db'
+
+# Replace this with your MySQL database details
+username = 'mysql'
+password = 'A7TZ65MmpEm/DuCqhEhTTkphLb7C7WJEKrg9s7UgQzg='
+hostname = 'mysql-gaaq'  # Use the actual hostname from the image you provided
+port = '3306'  # Use the actual port if different
+database = 'mysql'
+
+app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{username}:{password}@{hostname}:{port}/{database}'
+app.config['SECRET_KEY'] = 'your_secret_key'
+
+
 app.config['SECRET_KEY'] = 'your_secret_key'
 
 db = SQLAlchemy(app)
