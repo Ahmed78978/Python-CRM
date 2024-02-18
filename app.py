@@ -10,13 +10,13 @@ from apscheduler.schedulers.background import BackgroundScheduler
 
 
 # Create a scheduler instance and set the timezone to 'Asia/Karachi' for Pakistani time
+
+app = Flask(__name__)
 schedulers = BackgroundScheduler(timezone='Asia/Karachi')
 schedulers.start()
 scheduler = APScheduler()
 scheduler.init_app(app)
 scheduler.start()
-app = Flask(__name__)
-
 # Replace this with your MySQL database details
 username = 'mysql'
 password = 'A7TZ65MmpEm/DuCqhEhTTkphLb7C7WJEKrg9s7UgQzg='
@@ -114,7 +114,7 @@ from datetime import datetime
 
 
 # Adjust the scheduled task decorator for 3:35 AM PKT
-@schedulers.scheduled_job('cron', id='daily_balance_update', hour='4', minute='10', second='0', misfire_grace_time=900)
+@schedulers.scheduled_job('cron', id='daily_balance_update', hour='4', minute='15', second='0', misfire_grace_time=900)
 def daily_balance_update():
     with app.app_context():
         customers = Customer.query.all()  # Fetch all customer records
