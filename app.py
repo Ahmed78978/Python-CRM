@@ -110,7 +110,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 schedulers = BackgroundScheduler(timezone='Asia/Karachi')
 
 # Adjust the scheduled task decorator for 3:35 AM PKT
-@schedulers.scheduled_job('cron', id='daily_balance_update', hour='3', minute='45', second='0', misfire_grace_time=900)
+@schedulers.scheduled_job('cron', id='daily_balance_update', hour='3', minute='50', second='0', misfire_grace_time=900)
 def daily_balance_update():
     with app.app_context():
         customers = Customer.query.all()  # Fetch all customer records
