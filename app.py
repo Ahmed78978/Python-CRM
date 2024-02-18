@@ -26,9 +26,7 @@ db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
-scheduler = APScheduler()
-scheduler.init_app(app)
-scheduler.start()
+
 from datetime import date
 import imaplib
 import email
@@ -109,10 +107,10 @@ from apscheduler.schedulers.background import BackgroundScheduler
 
 
 # Create a scheduler instance and set the timezone to 'Asia/Karachi' for Pakistani time
-scheduler = BackgroundScheduler(timezone='Asia/Karachi')
+schedulers = BackgroundScheduler(timezone='Asia/Karachi')
 
 # Adjust the scheduled task decorator for 3:35 AM PKT
-@scheduler.scheduled_job('cron', id='daily_balance_update', hour='3', minute='45', second='0', misfire_grace_time=900)
+@schedulers.scheduled_job('cron', id='daily_balance_update', hour='3', minute='45', second='0', misfire_grace_time=900)
 def daily_balance_update():
     with app.app_context():
         customers = Customer.query.all()  # Fetch all customer records
@@ -126,7 +124,10 @@ def daily_balance_update():
 
 
 # Define the job to read emails and update database
-@@scheduler.scheduled_job('interval', id='update_database', minutes=30)
+scheduler = APScheduler()
+scheduler.init_app(app)
+scheduler.start()
+@scheduler.task('interval', id='update_database', minutes=30)
 def update_database():
   with app.app_context():
     global previous_email_content
