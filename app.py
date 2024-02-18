@@ -112,7 +112,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 scheduler = BackgroundScheduler(timezone='Asia/Karachi')
 
 # Adjust the scheduled task decorator for 3:35 AM PKT
-@scheduler.task('cron', id='daily_balance_update', hour='3', minute='45', second='0', misfire_grace_time=900)
+@scheduler.scheduled_job('cron', id='daily_balance_update', hour='3', minute='45', second='0', misfire_grace_time=900)
 def daily_balance_update():
     with app.app_context():
         customers = Customer.query.all()  # Fetch all customer records
@@ -126,7 +126,7 @@ def daily_balance_update():
 
 
 # Define the job to read emails and update database
-@scheduler.task('interval', id='update_database', minutes=30)
+@@scheduler.scheduled_job('interval', id='update_database', minutes=30)
 def update_database():
   with app.app_context():
     global previous_email_content
