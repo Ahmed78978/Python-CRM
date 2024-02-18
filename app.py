@@ -304,6 +304,7 @@ def login():
 def register():
     if request.method == 'POST':
         username = request.form['username']
+        username=username.lower()
         password = request.form['password']
         #hashed_password = generate_password_hash(password)
 
