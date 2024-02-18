@@ -413,6 +413,7 @@ def add_customer():
 
 
 if __name__ == '__main__':
+    schedulers.start()
     with app.app_context():
         db.create_all()
     app.run(debug=True)
