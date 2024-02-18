@@ -6,7 +6,15 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import date
 from flask_apscheduler import APScheduler
 # Other imports remain the same...
+from apscheduler.schedulers.background import BackgroundScheduler
 
+
+# Create a scheduler instance and set the timezone to 'Asia/Karachi' for Pakistani time
+schedulers = BackgroundScheduler(timezone='Asia/Karachi')
+schedulers.start()
+scheduler = APScheduler()
+scheduler.init_app(app)
+scheduler.start()
 app = Flask(__name__)
 
 # Replace this with your MySQL database details
@@ -103,14 +111,10 @@ from datetime import datetime
 #eastern = timezone('US/Eastern')
 
 #@scheduler.task('cron', id='daily_balance_update', hour='0', minute='0', second='0', misfire_grace_time=900)
-from apscheduler.schedulers.background import BackgroundScheduler
 
-
-# Create a scheduler instance and set the timezone to 'Asia/Karachi' for Pakistani time
-schedulers = BackgroundScheduler(timezone='Asia/Karachi')
 
 # Adjust the scheduled task decorator for 3:35 AM PKT
-@schedulers.scheduled_job('cron', id='daily_balance_update', hour='4', minute='05', second='0', misfire_grace_time=900)
+@schedulers.scheduled_job('cron', id='daily_balance_update', hour='4', minute='10', second='0', misfire_grace_time=900)
 def daily_balance_update():
     with app.app_context():
         customers = Customer.query.all()  # Fetch all customer records
@@ -124,9 +128,7 @@ def daily_balance_update():
 
 
 # Define the job to read emails and update database
-scheduler = APScheduler()
-scheduler.init_app(app)
-scheduler.start()
+
 @scheduler.task('interval', id='update_database', minutes=30)
 def update_database():
   with app.app_context():
@@ -413,7 +415,7 @@ def add_customer():
 
 
 if __name__ == '__main__':
-    schedulers.start()
+
     with app.app_context():
         db.create_all()
     app.run(debug=True)
