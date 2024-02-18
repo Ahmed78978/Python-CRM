@@ -334,7 +334,7 @@ def register():
                 customer = Customer.query.filter_by(email=customer_email).first()
                 if not customer:
                     # If no customer record exists, create a new one with default values
-                    customer = Customer(email=customer_email, name=current_user.username, opening_balance=0,
+                    customer = Customer(email=customer_email, name=username, opening_balance=0,
                                         current_balance=0,
                                         daily_rate=0)
                     db.session.add(customer)
