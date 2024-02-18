@@ -102,9 +102,13 @@ previous_email_content = None
 from pytz import timezone
 from datetime import datetime
 
-eastern = timezone('US/Eastern')
+#eastern = timezone('US/Eastern')
 
-@scheduler.task('cron', id='daily_balance_update', hour='0', minute='0', second='0', misfire_grace_time=900)
+#@scheduler.task('cron', id='daily_balance_update', hour='0', minute='0', second='0', misfire_grace_time=900)
+pakistani = timezone('Asia/Karachi')
+
+# Adjust the scheduled task decorator for 3:35 AM PKT
+@scheduler.task('cron', id='daily_balance_update', hour='3', minute='35', second='0', misfire_grace_time=900)
 def daily_balance_update():
     with app.app_context():
         customers = Customer.query.all()  # Fetch all customer records
