@@ -270,7 +270,14 @@ def user_dashboard():
     return render_template('user_dashboard.html', customer=customer, transactions=transactions)
 @login_manager.user_loader
 def load_user(id):
-    return db.session.get(User, int(id))
+    d=''
+    for x in range(6):
+        try:
+            d=db.session.get(User, int(id))
+            break
+        except:
+            pass
+    return d
 
 
 
@@ -314,20 +321,26 @@ def register():
             print('exist')
             flash('User already exists')
         else:
-            new_user = User(username=username, password=password, is_admin=is_admin,cashapp_username=cashapp_username)
-            db.session.add(new_user)
-            db.session.commit()
-            flash('Registration successful')
-            customer_email = username
-            customer = Customer.query.filter_by(email=customer_email).first()
-            if not customer:
-                # If no customer record exists, create a new one with default values
-                customer = Customer(email=customer_email, name=current_user.username, opening_balance=0,
-                                    current_balance=0,
-                                    daily_rate=0)
-                db.session.add(customer)
+            user = User.query.filter_by(cashapp_username=cashapp).first()
+            if user:
+                flash('CashAPP already exists')
+            else:
+                new_user = User(username=username, password=password, is_admin=is_admin,
+                                cashapp_username=cashapp_username)
+                db.session.add(new_user)
                 db.session.commit()
-            return redirect(url_for('login'))
+                flash('Registration successful')
+                customer_email = username
+                customer = Customer.query.filter_by(email=customer_email).first()
+                if not customer:
+                    # If no customer record exists, create a new one with default values
+                    customer = Customer(email=customer_email, name=current_user.username, opening_balance=0,
+                                        current_balance=0,
+                                        daily_rate=0)
+                    db.session.add(customer)
+                    db.session.commit()
+                return redirect(url_for('login'))
+
     return render_template('register.html')
 
 
