@@ -321,7 +321,7 @@ def register():
             print('exist')
             flash('User already exists')
         else:
-            user = User.query.filter_by(cashapp_username=cashapp).first()
+            user = User.query.filter_by(cashapp_username=cashapp_username).first()
             if user:
                 flash('CashAPP already exists')
             else:
