@@ -318,6 +318,15 @@ def register():
             db.session.add(new_user)
             db.session.commit()
             flash('Registration successful')
+            customer_email = username
+            customer = Customer.query.filter_by(email=customer_email).first()
+            if not customer:
+                # If no customer record exists, create a new one with default values
+                customer = Customer(email=customer_email, name=current_user.username, opening_balance=0,
+                                    current_balance=0,
+                                    daily_rate=0)
+                db.session.add(customer)
+                db.session.commit()
             return redirect(url_for('login'))
     return render_template('register.html')
 
