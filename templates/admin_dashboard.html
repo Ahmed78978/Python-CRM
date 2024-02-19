@@ -160,7 +160,7 @@
         {% for customer in customers %}
         <tr class="customer-row" data-customer-id="{{ customer.id }}">
             <td data-label="Customer Name">{{ customer.name }}</td>
-            <td data-label="Customer Email">{{ customer.daily_rate }}</td>
+            <td data-label="Daily Rate">{{ customer.daily_rate }}</td>
             <td data-label="Customer Balance">${{ customer.current_balance }}</td>
             <td>
                 <button class="edit-btn">Edit Balance</button>
