@@ -201,15 +201,25 @@ def admin_customer():
 
         # Create or update customer
         customer = Customer.query.filter_by(email=email).first()
+
         if customer:
             customer.name = name
             customer.opening_balance = opening_balance
             customer.current_balance = opening_balance
             customer.daily_rate = daily_rate
+            transaction_description = f"Thank You {name} for renting with us, your openning Balance is {opening_balance} with daily rate of {daily_rate}"
+            new_transaction = Transaction(amount=amount, description=transaction_description,
+                                          customer_id=customer.id)
+            db.session.add(new_transaction)
         else:
             customer = Customer(name=name, email=email, opening_balance=opening_balance,
                                 current_balance=opening_balance, daily_rate=daily_rate)
             db.session.add(customer)
+            customer = Customer.query.filter_by(email=email).first()
+            transaction_description = f"Thank You {customer.name} for renting with us, your openning Balance is {customer.opening_balance} with daily rate of {customer.daily_rate}"
+            new_transaction = Transaction(amount=amount, description=transaction_description,
+                                          customer_id=customer.id)
+            db.session.add(new_transaction)
         db.session.commit()
 
         return redirect(url_for('admin_dashboard'))
