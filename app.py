@@ -413,10 +413,10 @@ def add_customer():
         customer.current_balance = opening_balance  # Assuming you want to reset the current balance as well
         customer.daily_rate = daily_rate
         transaction_description = f"Thank You {customer.name} for renting with us, your openning Balance is {customer.opening_balance} with daily rate of {customer.daily_rate}"
-        new_transaction = Transaction(amount=amount, description=transaction_description,
+        new_transaction = Transaction(amount=customer.opening_balance, description=transaction_description,
                                       customer_id=customer_id)
         db.session.add(new_transaction)
-        
+
 
 
 
