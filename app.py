@@ -134,19 +134,19 @@ def update_database():
   with app.app_context():
     global previous_email_content
     new_email_content = read_and_skip_flagged_emails()
-    print(previous_email_content)
+    print("previous ",previous_email_content)
     if new_email_content != previous_email_content:
        try:
         payment_from_name = re.search(r"Payment from \$(\w+)", new_email_content)
         if payment_from_name:
             payment_from_name = payment_from_name.group(1)
-            print(payment_from_name)
+            print("paymentname ",payment_from_name)
 
         # Extract amount
         amount = re.search(r"sent you \$([0-9,.]+)", new_email_content)
         if amount:
             amount = amount.group(1)
-            print(amount)
+            print("amount: ",amount)
 
             # Fetch customer from database and update balance
             customer = User.query.filter_by(cashapp_username=payment_from_name).first()
