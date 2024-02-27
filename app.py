@@ -291,14 +291,14 @@ def user_dashboard():
     return render_template('user_dashboard.html', customer=customer, transactions=transactions)
 @login_manager.user_loader
 def load_user(id):
-    d=''
+    user = None
     for x in range(6):
         try:
-            d=db.session.get(User, int(id))
+            user = db.session.get(User, int(id))
             break
         except:
             pass
-    return d
+    return user
 
 
 
@@ -436,3 +436,4 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     app.run(debug=True)
+
