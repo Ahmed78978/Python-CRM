@@ -134,6 +134,7 @@ def update_database():
   with app.app_context():
     global previous_email_content
     new_email_content = read_and_skip_flagged_emails()
+    print(previous_email_content)
     if new_email_content != previous_email_content:
        try:
         payment_from_name = re.search(r"Payment from \$(\w+)", new_email_content)
