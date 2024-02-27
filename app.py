@@ -93,9 +93,9 @@ def read_and_skip_flagged_emails(count=3, contain_body=True, mail_server='imap.g
                     # Optionally print the email content
                     if contain_body:
                         if not body:
-                            return subject
+                            return msg
                         else:
-                         return subject
+                         return msg     
 
 
                     # Mark the email as read/seen
@@ -169,7 +169,7 @@ def update_database():
                 db.session.add(new_transaction)
                 db.session.commit()
     except:
-        print(a)
+
         pass
     # Update previous_email_content with the new email content
     previous_email_content = new_email_content
