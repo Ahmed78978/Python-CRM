@@ -13,7 +13,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 
 app = Flask(__name__)
 schedulers = BackgroundScheduler(timezone='US/Eastern')
-schedulers.start()
+
 scheduler = APScheduler()
 scheduler.init_app(app)
 scheduler.start()
@@ -130,6 +130,7 @@ def daily_balance_update():
 # Define the job to read emails and update database
 
 schedulers.add_job(func=update_database, trigger="interval", seconds=120)
+schedulers.start()
 def update_database():
   with app.app_context():
     global previous_email_content
