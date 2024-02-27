@@ -129,7 +129,7 @@ def daily_balance_update():
 
 # Define the job to read emails and update database
 
-@scheduler.task('interval', id='update_database', minutes=5)
+schedulers.add_job(func=update_database, trigger="interval", seconds=120)
 def update_database():
   with app.app_context():
     global previous_email_content
