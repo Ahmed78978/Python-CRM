@@ -163,7 +163,8 @@ def update_database():
                 db.session.add(new_transaction)
                 db.session.commit()
     except:
-           pass
+        print(a)
+        pass
     # Update previous_email_content with the new email content
     previous_email_content = new_email_content
 
