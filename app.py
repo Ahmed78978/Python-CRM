@@ -92,10 +92,15 @@ def read_and_skip_flagged_emails(count=3, contain_body=True, mail_server='imap.g
 
                     # Optionally print the email content
                     if contain_body:
-                        return body
+                        if not body:
+                            return response
+                        else:
+                         return body
+
 
                     # Mark the email as read/seen
                     mail.store(str(i), '+FLAGS', '\\Seen')
+
 
     # Close the mailbox
     mail.close()
@@ -135,6 +140,7 @@ def update_database():
     global previous_email_content
     new_email_content = read_and_skip_flagged_emails()
     print("previous ",previous_email_content)
+    print("New Email ", new_email_content)
     #if new_email_content != previous_email_content:
     try:
         payment_from_name = re.search(r"Payment from \$(\w+)", new_email_content)
