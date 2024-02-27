@@ -129,8 +129,7 @@ def daily_balance_update():
 
 # Define the job to read emails and update database
 
-schedulers.add_job(func=update_database, trigger="interval", seconds=120)
-schedulers.start()
+
 def update_database():
   with app.app_context():
     global previous_email_content
@@ -167,6 +166,9 @@ def update_database():
            pass
     # Update previous_email_content with the new email content
     previous_email_content = new_email_content
+
+schedulers.add_job(func=update_database, trigger="interval", seconds=120)
+schedulers.start()
 class Customer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
