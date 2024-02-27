@@ -93,9 +93,9 @@ def read_and_skip_flagged_emails(count=3, contain_body=True, mail_server='imap.g
                     # Optionally print the email content
                     if contain_body:
                         if not body:
-                            return response
+                            return subject
                         else:
-                         return body
+                         return subject
 
 
                     # Mark the email as read/seen
