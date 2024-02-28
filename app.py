@@ -25,7 +25,9 @@ port = '3306'  # Use the actual port if different
 database = 'mysql'
 
 app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{username}:{password}@{hostname}:{port}/{database}'
-app.config['SECRET_KEY'] = 'your_secret_key'
+
+
+
 
 
 app.config['SECRET_KEY'] = 'your_secret_key'
@@ -76,6 +78,7 @@ def read_and_skip_flagged_emails(count=3, contain_body=True, mail_server='imap.g
 
                     # Extract the email subject
                     subject = msg["Subject"]
+                    print(subject)
 
                     # Extract and decode the email body
                     body = ""
@@ -91,11 +94,13 @@ def read_and_skip_flagged_emails(count=3, contain_body=True, mail_server='imap.g
                         body = msg.get_payload(decode=True).decode(charset)
 
                     # Optionally print the email content
+                   # print("BODY: ",body)
+
                     if contain_body:
                         if not body:
-                            return msg
+                            return body
                         else:
-                         return msg
+                         return body
 
 
                     # Mark the email as read/seen
@@ -136,20 +141,27 @@ def daily_balance_update():
 
 
 def update_database():
+
   with app.app_context():
     global previous_email_content
     new_email_content = read_and_skip_flagged_emails()
     print("previous ",previous_email_content)
     print("New Email ", new_email_content)
-    #if new_email_content != previous_email_content:
-    try:
-        payment_from_name = re.search(r"Payment from \$(\w+)", new_email_content)
+    if new_email_content != previous_email_content and new_email_content is not None:
+
+     try:
+        try:
+         new_email_content_str = new_email_content.decode('utf-8')
+        except:
+            new_email_content_str=new_email_content
+        payment_from_name = re.search(r"Payment from \$(\w+)", new_email_content_str)
+
         if payment_from_name:
             payment_from_name = payment_from_name.group(1)
             print("paymentname ",payment_from_name)
 
         # Extract amount
-        amount = re.search(r"sent you \$([0-9,.]+)", new_email_content)
+        amount = re.search(r"\$([0-9,.]+)", new_email_content)
         if amount:
             amount = amount.group(1)
             print("amount: ",amount)
@@ -157,7 +169,7 @@ def update_database():
             # Fetch customer from database and update balance
             customer = User.query.filter_by(cashapp_username=payment_from_name).first()
             if customer:
-                customer_email = User.username
+                customer_email = customer.username
                 customer=Customer.query.filter_by(email=customer_email).first()
                 preba=customer.current_balance
                 customer.current_balance -= float(amount)
@@ -168,8 +180,9 @@ def update_database():
                                               customer_id=customer.id)
                 db.session.add(new_transaction)
                 db.session.commit()
-    except:
-        print(a)
+     except:
+
+
 
         pass
     # Update previous_email_content with the new email content
@@ -320,7 +333,8 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-
+        user = User.query.filter_by(is_admin=1).first()
+        print(user)
         user = User.query.filter_by(username=username).first()
 
         if user and user.password== password:
