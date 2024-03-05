@@ -147,7 +147,7 @@ def update_database():
     new_email_content = read_and_skip_flagged_emails()
     print("previous ",previous_email_content)
     print("New Email ", new_email_content)
-    if new_email_content != previous_email_content and new_email_content is not None:
+    if new_email_content is not None:
 
      try:
         try:
