@@ -93,7 +93,7 @@ def check():
     creds = authenticate()
     gmail = Gmail(_creds=creds)
     new_emails = gmail.get_unread_inbox()
-    return done
+    return new_emails
 gmail=None
 @app.route('/oauth2callback')
 def oauth2callback():
