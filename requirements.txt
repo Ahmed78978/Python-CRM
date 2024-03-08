@@ -11,3 +11,4 @@ pytz
 google_auth_oauthlib ==0.4.6
 bs4
 google-api-python-client
+oauth2client
