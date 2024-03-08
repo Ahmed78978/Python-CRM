@@ -114,7 +114,7 @@ def oauth2callback():
   #              credentials in a persistent database instead.
   credentials = flow.credentials
   #credentials_json = credentials.to_json()
-  gmail = Gmail(_creds=creds)
+  gmail = Gmail(_creds=credentials)
   p=gmail.get_unread_inbox()
   # Write JSON to file
   with open('token.pickle', 'wb') as token:
@@ -126,7 +126,7 @@ def oauth2callback():
 def authenticate():
     """Authenticate and authorize the user."""
     creds = None
-    
+
     # The file token.pickle stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
     # time.
