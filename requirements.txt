@@ -9,4 +9,4 @@ gunicorn
 pymysql
 pytz
 simplegmail
-pickle
+
