@@ -291,7 +291,9 @@ def update_database():
             payment_from_name = payment_from_name.group(1)
             print("paymentname ",payment_from_name, flush=True)
         else:
-            logging.info('no payment')
+            payment_from_name = re.search(r"Payment from \$(\w+)", email.html)
+            payment_from_name = payment_from_name.group(1)
+            print("paymentname ", payment_from_name, flush=True)
         # Extract amount
         amount = re.search(r"\$([0-9,]+)", new_email_content_str)
         if amount:
@@ -312,6 +314,7 @@ def update_database():
                                               customer_id=customer.id)
                 db.session.add(new_transaction)
                 db.session.commit()
+                email.mark_as_read()
       except:
 
 
