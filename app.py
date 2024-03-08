@@ -135,7 +135,7 @@ def authenticate():
             creds = pickle.load(token)
 
     # If there are no (valid) credentials available, let the user log in.
-    if not creds or not creds.valid:
+    if not creds :
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
