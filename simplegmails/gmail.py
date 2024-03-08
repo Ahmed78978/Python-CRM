@@ -83,7 +83,7 @@ class Gmail(object):
                 store = file.Storage(self.creds_file)
                 self.creds = None 
 
-            if not self.creds or self.creds.invalid:
+            if not self.creds :
                 flow = client.flow_from_clientsecrets(
                     self.client_secret_file, self._SCOPES
                 )
