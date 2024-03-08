@@ -93,8 +93,10 @@ def check():
     gmail = Gmail()
     new_emails = gmail.get_unread_inbox()
     return done
+gmail=None
 @app.route('/oauth2callback')
 def oauth2callback():
+  global gmail
   # Specify the state when creating the flow in the callback so that it can
   # verified in the authorization server response.
   state = flask.session['state']
@@ -112,18 +114,19 @@ def oauth2callback():
   #              credentials in a persistent database instead.
   credentials = flow.credentials
   #credentials_json = credentials.to_json()
-
+  gmail = Gmail(_creds=creds)
+  p=gmail.get_unread_inbox()
   # Write JSON to file
   with open('token.pickle', 'wb') as token:
       pickle.dump(credentials, token)
 
-  return "Callback received. Please handle the OAuth flow."
+  return p
 
-gmail=None
+
 def authenticate():
     """Authenticate and authorize the user."""
     creds = None
-    global gmail
+    
     # The file token.pickle stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
     # time.
@@ -140,7 +143,7 @@ def authenticate():
                 'credentials.json', SCOPES)
             creds = flow.run_local_server(port=0)
         # Save the credentials for the next run
-        gmail = Gmail(_creds=creds)
+
         with open('token.pickle', 'wb') as token:
             pickle.dump(creds, token)
     return creds
