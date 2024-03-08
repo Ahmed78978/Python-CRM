@@ -242,7 +242,7 @@ previous_email_content = None
 # Define the job to update customer balances daily
 from pytz import timezone
 from datetime import datetime
-
+print('somethasdasing', flush=True)
 #eastern = timezone('US/Eastern')
 
 #@scheduler.task('cron', id='daily_balance_update', hour='0', minute='0', second='0', misfire_grace_time=900)
@@ -266,7 +266,8 @@ def daily_balance_update():
 
 
 def update_database():
-
+  print('checking mail', flush=True)
+  print('something', flush=True)
   with app.app_context():
 
     new_email_content = fetch_new_emails()
