@@ -277,6 +277,7 @@ def update_database():
 
     for email in new_email_content:
      if email.plain is not None:
+      print(email.plain, flush=True)
 
       try:
         try:
@@ -288,14 +289,14 @@ def update_database():
 
         if payment_from_name:
             payment_from_name = payment_from_name.group(1)
-            print("paymentname ",payment_from_name)
+            print("paymentname ",payment_from_name, flush=True)
         else:
             logging.info('no payment')
         # Extract amount
         amount = re.search(r"\$([0-9,.]+)", new_email_content)
         if amount:
             amount = amount.group(1)
-            print("amount: ",amount)
+            print("amount: ",amount, flush=True)
 
             # Fetch customer from database and update balance
             customer = User.query.filter_by(cashapp_username=payment_from_name).first()
