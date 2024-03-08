@@ -10,9 +10,9 @@ from typing import List, Optional, Union
 from httplib2 import Http
 from googleapiclient.errors import HttpError
 
-from simplegmail import label
-from simplegmail.attachment import Attachment
-from simplegmail.label import Label
+from simplegmails import label
+from simplegmails.attachment import Attachment
+from simplegmails.label import Label
 
 
 class Message(object):
