@@ -46,6 +46,41 @@ host = "imap.gmail.com"
 user='paycarrent88@gmail.com'
 passa='yraqquqhosjuhblh'
 
+SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
+
+def authenticate():
+    """Authenticate and authorize the user."""
+    creds = None
+    # The file token.pickle stores the user's access and refresh tokens, and is
+    # created automatically when the authorization flow completes for the first
+    # time.
+    if os.path.exists('token.pickle'):
+        with open('token.pickle', 'rb') as token:
+            creds = pickle.load(token)
+    # If there are no (valid) credentials available, let the user log in.
+    if not creds or not creds.valid:
+        if creds and creds.expired and creds.refresh_token:
+            creds.refresh(Request())
+        else:
+            flow = InstalledAppFlow.from_client_secrets_file(
+                'credentials.json', SCOPES)
+            creds = flow.run_local_server(port=0)
+        # Save the credentials for the next run
+        with open('token.pickle', 'wb') as token:
+            pickle.dump(creds, token)
+    return creds
+previous_email_ids = set()
+def fetch_new_emails():
+    """Fetch and print new unread emails."""
+    creds = authenticate()
+    gmail = Gmail(creds)
+    global previous_email_ids
+
+    new_emails = gmail.get_unread_inbox()
+    for email in new_emails:
+            if email.id not in previous_email_ids:
+                previous_email_ids.add(email.id)
+                return email.plain
 
 
 def read_and_skip_flagged_emails(count=3, contain_body=True, mail_server='imap.gmail.com', user=user,passa=passa):
@@ -143,9 +178,9 @@ def daily_balance_update():
 def update_database():
 
   with app.app_context():
-    global previous_email_content
-    new_email_content = read_and_skip_flagged_emails()
-    print("previous ",previous_email_content)
+
+    new_email_content = fetch_new_emails()
+
     print("New Email ", new_email_content)
     if new_email_content is not None:
 
