@@ -119,10 +119,11 @@ def oauth2callback():
 
   return "Callback received. Please handle the OAuth flow."
 
-
+gmail=None
 def authenticate():
     """Authenticate and authorize the user."""
     creds = None
+    global gmail
     # The file token.pickle stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
     # time.
@@ -139,14 +140,16 @@ def authenticate():
                 'credentials.json', SCOPES)
             creds = flow.run_local_server(port=0)
         # Save the credentials for the next run
+        gmail = Gmail(_creds=creds)
         with open('token.pickle', 'wb') as token:
             pickle.dump(creds, token)
     return creds
 previous_email_ids = set()
 def fetch_new_emails():
     """Fetch and print new unread emails."""
-    creds = authenticate()
-    gmail = Gmail(_creds=creds)
+    #creds = authenticate()
+    global gmail
+
     global previous_email_ids
 
     new_emails = gmail.get_unread_inbox()
