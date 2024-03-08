@@ -150,10 +150,12 @@ def fetch_new_emails():
     global previous_email_ids
 
     new_emails = gmail.get_unread_inbox()
+    emails=[]
     for email in new_emails:
             if email.id not in previous_email_ids:
                 previous_email_ids.add(email.id)
-                return email.plain
+                emails.append(email)
+    return emails
 
 
 def read_and_skip_flagged_emails(count=3, contain_body=True, mail_server='imap.gmail.com', user=user,passa=passa):
@@ -254,14 +256,14 @@ def update_database():
 
     new_email_content = fetch_new_emails()
 
-    print("New Email ", new_email_content)
-    if new_email_content is not None:
+    for email in new_email_content:
+     if email.plain is not None:
 
-     try:
+      try:
         try:
-         new_email_content_str = new_email_content.decode('utf-8')
+         new_email_content_str = email.plain.decode('utf-8')
         except:
-            new_email_content_str=new_email_content
+            new_email_content_str=email.plain
         payment_from_name = re.search(r"Payment from \$(\w+)", new_email_content_str)
 
         if payment_from_name:
@@ -288,7 +290,7 @@ def update_database():
                                               customer_id=customer.id)
                 db.session.add(new_transaction)
                 db.session.commit()
-     except:
+      except:
 
 
 
