@@ -63,6 +63,8 @@ def authenticate():
     if os.path.exists('token.pickle'):
         with open('token.pickle', 'rb') as token:
             creds = pickle.load(token)
+    print('available')
+    print(os.path.dirname(os.path.realpath(__file__)))
     # If there are no (valid) credentials available, let the user log in.
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
