@@ -293,7 +293,7 @@ def update_database():
         else:
             logging.info('no payment')
         # Extract amount
-        amount = re.search(r"\$([0-9,.]+)", new_email_content)
+        amount = re.search(r"\$([0-9,]+)", new_email_content)
         if amount:
             amount = amount.group(1)
             print("amount: ",amount, flush=True)
