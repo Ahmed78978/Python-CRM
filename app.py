@@ -93,7 +93,13 @@ def check():
     creds = authenticate()
     gmail = Gmail(_creds=creds)
     new_emails = gmail.get_unread_inbox()
-    return "done"
+    emails = []
+    for email in new_emails:
+        if email.id not in previous_email_ids:
+            previous_email_ids.add(email.id)
+            emails.append(email)
+    return emails
+
 gmail=None
 @app.route('/oauth2callback')
 def oauth2callback():
@@ -153,7 +159,7 @@ def fetch_new_emails():
     """Fetch and print new unread emails."""
     creds = authenticate()
     gmail = Gmail(_creds=creds)
-    
+
 
 
     global previous_email_ids
