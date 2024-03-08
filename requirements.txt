@@ -8,5 +8,4 @@ email-validator
 gunicorn
 pymysql
 pytz
-simplegmail ==4.1.1
 google_auth_oauthlib ==0.4.6
