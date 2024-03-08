@@ -6,6 +6,7 @@ from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from simplegmail import Gmail
 from flask import Flask, render_template, redirect, url_for, request, flash
+import flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -51,15 +52,15 @@ from email.header import decode_header
 host = "imap.gmail.com"
 user='paycarrent88@gmail.com'
 passa='yraqquqhosjuhblh'
-
+states=''
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
+
 @app.route('/authorize')
 def authorize():
   # Create flow instance to manage the OAuth 2.0 Authorization Grant Flow steps.
-
   flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
-      'credentials.json', scopes=SCOPES)
-  flow.redirect_uri = 'https://paycarrent.com'
+      CLIENT_SECRETS_FILE, scopes=SCOPES)
+
   # The URI created here must exactly match one of the authorized redirect URIs
   # for the OAuth 2.0 client, which you configured in the API Console. If this
   # value doesn't match an authorized URI, you will get a 'redirect_uri_mismatch'
@@ -98,10 +99,11 @@ def oauth2callback():
   #              credentials in a persistent database instead.
   credentials = flow.credentials
   with open('token.pickle', 'wb') as token:
-      pickle.dump(creds, token)
+      pickle.dump(credentials, token)
+
+  return "Callback received. Please handle the OAuth flow."
 
 
-  return flask.redirect(flask.url_for('test_api_request'))
 def authenticate():
     """Authenticate and authorize the user."""
     creds = None
