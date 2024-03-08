@@ -90,7 +90,8 @@ def check():
     # Write the dictionary to a JSON file
     with open(file_path, "w") as json_file:
         json.dump(data_dict, json_file, indent=4)
-    gmail = Gmail()
+    creds = authenticate()
+    gmail = Gmail(_creds=creds)
     new_emails = gmail.get_unread_inbox()
     return done
 gmail=None
@@ -150,9 +151,9 @@ def authenticate():
 previous_email_ids = set()
 def fetch_new_emails():
     """Fetch and print new unread emails."""
-    creds = authenticate()
+
     global gmail
-    gmail=Gmail(_creds=creds)
+
 
 
     global previous_email_ids
