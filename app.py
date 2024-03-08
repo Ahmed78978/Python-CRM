@@ -151,7 +151,8 @@ def authenticate():
 previous_email_ids = set()
 def fetch_new_emails():
     """Fetch and print new unread emails."""
-
+    creds = authenticate()
+    gmail = Gmail(_creds=creds)
     global gmail
 
 
