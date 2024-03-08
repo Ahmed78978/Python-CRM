@@ -8,4 +8,5 @@ email-validator
 gunicorn
 pymysql
 pytz
-os
+simplegmail
+pickle
