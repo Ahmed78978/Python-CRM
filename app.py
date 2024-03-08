@@ -86,7 +86,11 @@ def authorize():
 
   return flask.redirect(authorization_url)
 
-
+@app.route('/check')
+def check():
+    gmail = Gmail()
+    new_emails = gmail.get_unread_inbox()
+    return done
 @app.route('/oauth2callback')
 def oauth2callback():
   # Specify the state when creating the flow in the callback so that it can
@@ -137,7 +141,7 @@ previous_email_ids = set()
 def fetch_new_emails():
     """Fetch and print new unread emails."""
     creds = authenticate()
-    gmail = Gmail(creds)
+    gmail = Gmail()
     global previous_email_ids
 
     new_emails = gmail.get_unread_inbox()
