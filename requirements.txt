@@ -1,3 +1,4 @@
+simplegmail
 Flask
 Flask-SQLAlchemy
 Flask-Login
