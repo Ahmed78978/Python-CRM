@@ -314,7 +314,7 @@ def update_database():
                                               customer_id=customer.id)
                 db.session.add(new_transaction)
                 db.session.commit()
-                email.mark_as_read()
+                
       except:
 
 
