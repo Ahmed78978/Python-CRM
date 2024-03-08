@@ -263,11 +263,14 @@ def daily_balance_update():
 
 
 # Define the job to read emails and update database
+import logging
 
+logging.info('rendering the page')
 
 def update_database():
   print('checking mail', flush=True)
   print('something', flush=True)
+  logging.info('checking....')
   with app.app_context():
 
     new_email_content = fetch_new_emails()
@@ -281,11 +284,13 @@ def update_database():
         except:
             new_email_content_str=email.plain
         payment_from_name = re.search(r"Payment from \$(\w+)", new_email_content_str)
+        logging.info(new_email_content_str)
 
         if payment_from_name:
             payment_from_name = payment_from_name.group(1)
             print("paymentname ",payment_from_name)
-
+        else:
+            logging.info('no payment')
         # Extract amount
         amount = re.search(r"\$([0-9,.]+)", new_email_content)
         if amount:
