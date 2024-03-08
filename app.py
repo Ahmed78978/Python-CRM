@@ -111,11 +111,11 @@ def oauth2callback():
   # ACTION ITEM: In a production app, you likely want to save these
   #              credentials in a persistent database instead.
   credentials = flow.credentials
-  credentials_json = credentials.to_json()
+  #credentials_json = credentials.to_json()
 
   # Write JSON to file
-  with open('gmail_token.json', 'w') as token_file:
-      json.dump(credentials_json, token_file)
+  with open('token.pickle', 'wb') as token:
+      pickle.dump(credentials, token)
 
   return "Callback received. Please handle the OAuth flow."
 
@@ -146,7 +146,7 @@ previous_email_ids = set()
 def fetch_new_emails():
     """Fetch and print new unread emails."""
     creds = authenticate()
-    gmail = Gmail()
+    gmail = Gmail(creds)
     global previous_email_ids
 
     new_emails = gmail.get_unread_inbox()
