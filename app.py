@@ -34,16 +34,10 @@ database = 'mysql'
 #app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{username}:{password}@{hostname}:{port}/{database}'
 
 app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{os.path.join(os.getcwd(), "users.db")}'
-text="""
-{"web":{"client_id":"738434935700-k7817gj4ej0tdq9a4nk644li3vnd8ovt.apps.googleusercontent.com","project_id":"numeric-nova-416602","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_secret":"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","redirect_uris":["https://www.paycarrent.com"],"javascript_origins":["https://www.paycarrent.com"]}}"""
-data_dict = json.loads(text)
+
 
 # Specify the file path where you want to save the JSON file
-file_path = "client_secret.json"
 
-# Write the dictionary to a JSON file
-with open(file_path, "w") as json_file:
-    json.dump(data_dict, json_file, indent=4)
 app.config['SECRET_KEY'] = 'your_secret_key'
 
 db = SQLAlchemy(app)
@@ -88,6 +82,14 @@ def authorize():
 
 @app.route('/check')
 def check():
+    text = """
+    {"web":{"client_id":"738434935700-k7817gj4ej0tdq9a4nk644li3vnd8ovt.apps.googleusercontent.com","project_id":"numeric-nova-416602","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_secret":"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","redirect_uris":["https://www.paycarrent.com"],"javascript_origins":["https://www.paycarrent.com"]}}"""
+    data_dict = json.loads(text)
+    file_path = "client_secret.json"
+
+    # Write the dictionary to a JSON file
+    with open(file_path, "w") as json_file:
+        json.dump(data_dict, json_file, indent=4)
     gmail = Gmail()
     new_emails = gmail.get_unread_inbox()
     return done
