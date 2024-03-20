@@ -31,9 +31,9 @@ hostname = 'mysql-gaaq'  # Use the actual hostname from the image you provided
 port = '3306'  # Use the actual port if different
 database = 'mysql'
 
-#app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{username}:{password}@{hostname}:{port}/{database}'
+app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{username}:{password}@{hostname}:{port}/{database}'
 
-app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{os.path.join(os.getcwd(), "users.db")}'
+#app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{os.path.join(os.getcwd(), "users.db")}'
 
 
 # Specify the file path where you want to save the JSON file
