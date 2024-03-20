@@ -31,9 +31,9 @@ hostname = 'mysql-gaaq'  # Use the actual hostname from the image you provided
 port = '3306'  # Use the actual port if different
 database = 'mysql'
 
-app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{username}:{password}@{hostname}:{port}/{database}'
+#app.config['SQLALCHEMY_DATABASE_URI'] = f'mysql+pymysql://{username}:{password}@{hostname}:{port}/{database}'
 
-#app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{os.path.join(os.getcwd(), "users.db")}'
+app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{os.path.join(os.getcwd(), "users.db")}'
 
 
 # Specify the file path where you want to save the JSON file
@@ -121,13 +121,12 @@ def oauth2callback():
   #              credentials in a persistent database instead.
   credentials = flow.credentials
   #credentials_json = credentials.to_json()
-  gmail = Gmail(_creds=credentials)
-  p=gmail.get_unread_inbox()
+
   # Write JSON to file
   with open('token.pickle', 'wb') as token:
       pickle.dump(credentials, token)
 
-  return p
+  return "HELLO"
 
 
 def authenticate():
