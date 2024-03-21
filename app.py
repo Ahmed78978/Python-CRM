@@ -294,7 +294,7 @@ def update_database():
             payment_from_name = payment_from_name.group(1)
             print("paymentname ", payment_from_name, flush=True)
         # Extract amount
-        amount = re.search(r"\$([0-9,]+)", new_email_content_str)
+        amount = re.search(r"\$([0-9,]+(?:\.\d{1,2})?)", new_email_content_str)
         if amount:
             amount = amount.group(1)
             print("amount: ",amount, flush=True)
