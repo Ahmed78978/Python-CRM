@@ -59,26 +59,16 @@ SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
 @app.route('/authorize')
 def authorize():
   # Create flow instance to manage the OAuth 2.0 Authorization Grant Flow steps.
-  flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
-      'credentials.json', scopes=SCOPES)
+  flow = InstalledAppFlow.from_client_secrets_file(
+      'credentials.json', scopes=SCOPES, authorization_prompt_message="")
+  flow.config['client_config']['auth_uri'] = 'https://accounts.google.com/o/oauth2/auth?'
+  flow.config['client_config']['token_uri'] = 'https://oauth2.googleapis.com/token'
 
-  # The URI created here must exactly match one of the authorized redirect URIs
-  # for the OAuth 2.0 client, which you configured in the API Console. If this
-  # value doesn't match an authorized URI, you will get a 'redirect_uri_mismatch'
-  # error.
-  flow.redirect_uri = flask.url_for('oauth2callback', _external=True)
+  # Generate the authorization URL
+  auth_url, _ = flow.authorization_url(prompt='consent')
 
-  authorization_url, state = flow.authorization_url(
-      # Enable offline access so that you can refresh an access token without
-      # re-prompting the user for permission. Recommended for web server apps.
-      access_type='offline',
-      # Enable incremental authorization. Recommended as a best practice.
-      include_granted_scopes='true')
-
-  # Store the state so the callback can verify the auth server response.
-  flask.session['state'] = state
-
-  return flask.redirect(authorization_url)
+  # Redirect the user to the authorization URL
+  return redirect(auth_url)
 
 @app.route('/check')
 def check():
@@ -106,53 +96,45 @@ def oauth2callback():
   global gmail
   # Specify the state when creating the flow in the callback so that it can
   # verified in the authorization server response.
-  state = flask.session['state']
+  code = request.args.get('code')
 
-  flow = google_auth_oauthlib.flow.Flow.from_client_secrets_file(
-      'credentials.json', scopes=SCOPES, state=state)
-  flow.redirect_uri = flask.url_for('oauth2callback', _external=True)
+  # Exchange the authorization code for credentials
+  flow = InstalledAppFlow.from_client_secrets_file(
+      'credentials.json', scopes=SCOPES)
+  flow.config['client_config']['auth_uri'] = 'https://accounts.google.com/o/oauth2/auth?'
+  flow.config['client_config']['token_uri'] = 'https://oauth2.googleapis.com/token'
 
-  # Use the authorization server's response to fetch the OAuth 2.0 tokens.
-  authorization_response = flask.request.url
-  flow.fetch_token(authorization_response=authorization_response)
+  flow.fetch_token(code=code)
 
-  # Store credentials in the session.
-  # ACTION ITEM: In a production app, you likely want to save these
-  #              credentials in a persistent database instead.
-  credentials = flow.credentials
-  #credentials_json = credentials.to_json()
-
-  # Write JSON to file
+  # Save the credentials to a file for future use
+  creds = flow.credentials
   with open('token.pickle', 'wb') as token:
-      pickle.dump(credentials, token)
+      pickle.dump(creds, token)
 
-  return "HELLO"
+  return "Authorization successful. Credentials saved."
 
 
 def authenticate():
     """Authenticate and authorize the user."""
-    creds = None
+
 
     # The file token.pickle stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
     # time.
-    if os.path.exists('token.pickle'):
-        with open('token.pickle', 'rb') as token:
-            creds = pickle.load(token)
+    creds = None
+    if os.path.exists('tokens.json'):
+        creds = Credentials.from_authorized_user_file('tokens.json')
 
-    # If there are no (valid) credentials available, let the user log in.
-    if not creds :
-        if creds and creds.expired and creds.refresh_token:
-            creds.refresh(Request())
-        else:
-            flow = InstalledAppFlow.from_client_secrets_file(
-                'credentials.json', SCOPES)
-            creds = flow.run_local_server(port=0)
-        # Save the credentials for the next run
+    # Check if the credentials are expired and have a refresh token
+    if creds and creds.expired and creds.refresh_token:
+        # Refresh the credentials using the refresh token
+        creds.refresh(Request())
 
+        # Save the refreshed credentials back to the file
         with open('token.pickle', 'wb') as token:
             pickle.dump(creds, token)
-    return creds
+        return creds
+
 previous_email_ids = set()
 def fetch_new_emails():
     """Fetch and print new unread emails."""
