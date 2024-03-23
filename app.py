@@ -99,7 +99,7 @@ def oauth2callback():
   # Exchange the authorization code for credentials
   flow = InstalledAppFlow.from_client_secrets_file(
       'credentials.json', scopes=SCOPES)
-  flow.redirect_uri = 'https://paycarrent.com/'
+  flow.redirect_uri = 'https://paycarrent.com'
 
   flow.fetch_token(code=code)
 
