@@ -61,7 +61,7 @@ def authorize():
   # Create flow instance to manage the OAuth 2.0 Authorization Grant Flow steps.
   flow = InstalledAppFlow.from_client_secrets_file(
       'credentials.json', scopes=SCOPES)
-  
+  flow.redirect_uri = 'https://paycarrent.com/oauth2callback'
   # Generate the authorization URL
   auth_url, _ = flow.authorization_url(prompt='consent')
 
