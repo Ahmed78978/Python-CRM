@@ -60,7 +60,7 @@ SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
 def authorize():
   # Create flow instance to manage the OAuth 2.0 Authorization Grant Flow steps.
   flow = InstalledAppFlow.from_client_secrets_file(
-      'credentials.json', scopes=SCOPES, authorization_prompt_message="")
+      'credentials.json', scopes=SCOPES)
   flow.config['client_config']['auth_uri'] = 'https://accounts.google.com/o/oauth2/auth?'
   flow.config['client_config']['token_uri'] = 'https://oauth2.googleapis.com/token'
 
