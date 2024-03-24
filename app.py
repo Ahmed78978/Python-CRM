@@ -55,47 +55,84 @@ user='paycarrent88@gmail.com'
 passa='yraqquqhosjuhblh'
 states=''
 SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
-
+from oauth2client import client, file, tools
+flow = None
 @app.route('/authorize')
 def authorize():
+  global flow
   # Create flow instance to manage the OAuth 2.0 Authorization Grant Flow steps.
-  flow = InstalledAppFlow.from_client_secrets_file(
-      'credentials.json', scopes=SCOPES)
-  flow.redirect_uri = 'https://paycarrent.com/oauth2callback'
+  #flow = InstalledAppFlow.from_client_secrets_file(
+  #    'credentials.json', scopes=SCOPES)
+  #flow.redirect_uri = 'https://paycarrent.com/oauth2callback'
   # Generate the authorization URL
-  auth_url, _ = flow.authorization_url(prompt='consent')
+  #auth_url, _ = flow.authorization_url(prompt='consent')
+  CLIENT_SECRETS_FILE = 'client_secret.json'
+  flow = client.flow_from_clientsecrets(
+      CLIENT_SECRETS_FILE, SCOPES
+  )
 
+  flow.params['access_type'] = 'offline'
+  flow.params['prompt'] = 'consent'
+  args.append('--noauth_local_webserver')
+
+
+  flags = tools.argparser.parse_args(args)
   # Redirect the user to the authorization URL
-  return redirect(auth_url)
+  if flags is None:
+      flags = argparser.parse_args()
+  logging.getLogger().setLevel(getattr(logging, flags.logging_level))
+  if not flags.noauth_local_webserver:
+      success = False
+      port_number = 0
+      for port in flags.auth_host_port:
+          port_number = port
+          try:
+              httpd = ClientRedirectServer((flags.auth_host_name, port),
+                                           ClientRedirectHandler)
+          except socket.error:
+              pass
+          else:
+              success = True
+              break
+      flags.noauth_local_webserver = not success
+      if not success:
+          print(_FAILED_START_MESSAGE)
 
-@app.route('/check')
-def check():
-    text = """
-    {"web":{"client_id":"738434935700-k7817gj4ej0tdq9a4nk644li3vnd8ovt.apps.googleusercontent.com","project_id":"numeric-nova-416602","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_secret":"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","redirect_uris":["https://www.paycarrent.com"],"javascript_origins":["https://www.paycarrent.com"]}}"""
-    data_dict = json.loads(text)
-    file_path = "client_secret.json"
+  if not flags.noauth_local_webserver:
+      oauth_callback = 'http://{host}:{port}/'.format(
+          host=flags.auth_host_name, port=port_number)
+  else:
+      oauth_callback = client.OOB_CALLBACK_URN
+  flow.redirect_uri = oauth_callback
+  authorize_url = flow.step1_get_authorize_url()
 
-    # Write the dictionary to a JSON file
-    with open(file_path, "w") as json_file:
-        json.dump(data_dict, json_file, indent=4)
-    creds = authenticate()
-    gmail = Gmail(_creds=creds)
-    new_emails = gmail.get_unread_inbox()
-    emails = []
-    for email in new_emails:
-        if email.id not in previous_email_ids:
-            previous_email_ids.add(email.id)
-            emails.append(email)
-    return emails
-from oauth2client import client, file, tools
+
+
+
+  return redirect(authorize_url)
+
+
+
 gmail=None
 @app.route('/oauth2callback')
 def oauth2callback():
   global gmail
+  global flow
   # Specify the state when creating the flow in the callback so that it can
   # verified in the authorization server response.
   code = request.args.get('code')
 
+  credential=None
+  import httplib2
+
+  # Create an instance of httplib2.Http
+  http = httplib2.Http()
+
+
+  credential = flow.step2_exchange(code, http=http)
+
+
+  print('Authentication successful.')
   # Exchange the authorization code for credentials
   #flow = InstalledAppFlow.from_client_secrets_file(
      # 'credentials.json', scopes=SCOPES)
@@ -105,12 +142,7 @@ def oauth2callback():
 
   # Save the credentials to a file for future use
   #creds = flow.credentials
-  SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
-  flow = client.flow_from_clientsecrets(
-      'credentials.json', SCOPES
-  )
-  http=None
-  credential = flow.step2_exchange(code, http=http)
+
   with open('token.pickle', 'wb') as token:
       pickle.dump(credential, token)
 
