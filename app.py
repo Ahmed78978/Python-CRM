@@ -104,7 +104,8 @@ def authorize():
           host=flags.auth_host_name, port=port_number)
   else:
       oauth_callback = client.OOB_CALLBACK_URN
-  flow.redirect_uri = oauth_callback
+  flow.redirect_uri = 'https://paycarrent.com/oauth2callback'
+
   authorize_url = flow.step1_get_authorize_url()
 
 
