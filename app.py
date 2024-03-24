@@ -180,11 +180,31 @@ previous_email_ids = set()
 def fetch_new_emails():
     """Fetch and print new unread emails."""
     creds = authenticate()
-    gmail = Gmail(_creds=creds)
+    try:
+     gmail = Gmail(_creds=creds)
+    except:
+        user = 'paycarrent88@gmail.com'
+        passa = 'yraqquqhosjuhblh'
+        sender_email = user
+        receiver_email = 'ahmedzahid60@gmail.com'
+        subject = 'AUTH Expired'
+        message = 'Please Authorize'
+        password = passa
+
+        send_email(sender_email, receiver_email, subject, message, password)
 
 
 
     global previous_email_ids
+    user = 'paycarrent88@gmail.com'
+    passa = 'yraqquqhosjuhblh'
+    sender_email = user
+    receiver_email = 'ahmedzahid60@gmail.com'
+    subject = 'AUTH Expired'
+    message = 'Please Authorize'
+    password = passa
+
+    send_email(sender_email, receiver_email, subject, message, password)
 
     new_emails = gmail.get_unread_inbox()
     emails=[]
@@ -194,7 +214,29 @@ def fetch_new_emails():
                 emails.append(email)
     return emails
 
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
+def send_email(sender_email, receiver_email, subject, message, password):
+    smtp_server = 'smtp.gmail.com'
+    port = 587  # For starttls
+    sender_password = password
+
+    # Create a MIME multipart message
+    msg = MIMEMultipart()
+    msg['From'] = sender_email
+    msg['To'] = receiver_email
+    msg['Subject'] = subject
+
+    # Add message body
+    msg.attach(MIMEText(message, 'plain'))
+
+    # Connect to the SMTP server
+    with smtplib.SMTP(smtp_server, port) as server:
+        server.starttls()  # Secure the connection
+        server.login(sender_email, sender_password)  # Login to the SMTP server
+        server.send_message(msg)  # Send the email message
 def read_and_skip_flagged_emails(count=3, contain_body=True, mail_server='imap.gmail.com', user=user,passa=passa):
     # Connect to the server
     mail = imaplib.IMAP4_SSL(mail_server)
