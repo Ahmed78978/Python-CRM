@@ -196,15 +196,7 @@ def fetch_new_emails():
 
 
     global previous_email_ids
-    user = 'paycarrent88@gmail.com'
-    passa = 'yraqquqhosjuhblh'
-    sender_email = user
-    receiver_email = 'ahmedzahid60@gmail.com'
-    subject = 'AUTH Expired'
-    message = 'Please Authorize'
-    password = passa
-
-    send_email(sender_email, receiver_email, subject, message, password)
+    
 
     new_emails = gmail.get_unread_inbox()
     emails=[]
