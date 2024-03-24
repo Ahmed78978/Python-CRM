@@ -129,14 +129,15 @@ def authenticate():
             creds = pickle.load(token)
 
     # Check if the credentials are expired and have a refresh token
-    if creds and creds.expired and creds.refresh_token:
-        # Refresh the credentials using the refresh token
-        creds.refresh(Request())
-
-        # Save the refreshed credentials back to the file
-        with open('token.pickle', 'wb') as token:
-            pickle.dump(creds, token)
-        return creds
+        # If there are no (valid) credentials available, let the user log in.
+    if not creds:
+            if creds and creds.expired and creds.refresh_token:
+                creds.refresh(Request())
+            else:
+                flow = InstalledAppFlow.from_client_secrets_file(
+                    'credentials.json', SCOPES)
+                creds = flow.run_local_server(port=0)
+            # Save the credentials for the next run
     else:
         return creds
 
