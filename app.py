@@ -73,6 +73,7 @@ def authorize():
 
   flow.params['access_type'] = 'offline'
   flow.params['prompt'] = 'consent'
+  args = []
   args.append('--noauth_local_webserver')
 
 
