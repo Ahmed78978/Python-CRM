@@ -97,16 +97,21 @@ def oauth2callback():
   code = request.args.get('code')
 
   # Exchange the authorization code for credentials
-  flow = InstalledAppFlow.from_client_secrets_file(
-      'credentials.json', scopes=SCOPES)
-  flow.redirect_uri = 'https://paycarrent.com/oauth2callback'
+  #flow = InstalledAppFlow.from_client_secrets_file(
+     # 'credentials.json', scopes=SCOPES)
+  #flow.redirect_uri = 'https://paycarrent.com/oauth2callback'
 
-  flow.fetch_token(code=code)
+  #flow.fetch_token(code=code)
 
   # Save the credentials to a file for future use
-  creds = flow.credentials
+  #creds = flow.credentials
+  SCOPES = ['https://www.googleapis.com/auth/gmail.readonly']
+  flow = client.flow_from_clientsecrets(
+      'credentials.json', SCOPES
+  )
+  credential = flow.step2_exchange(code, http=http)
   with open('token.pickle', 'wb') as token:
-      pickle.dump(creds, token)
+      pickle.dump(credential, token)
 
   return "Authorization successful. Credentials saved."
 
