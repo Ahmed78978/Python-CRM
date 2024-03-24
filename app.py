@@ -87,7 +87,7 @@ def check():
             previous_email_ids.add(email.id)
             emails.append(email)
     return emails
-
+from oauth2client import client, file, tools
 gmail=None
 @app.route('/oauth2callback')
 def oauth2callback():
