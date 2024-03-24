@@ -70,7 +70,7 @@ def authorize():
   flow = client.flow_from_clientsecrets(
       CLIENT_SECRETS_FILE, SCOPES
   )
-
+  flow.redirect_uri = 'https://paycarrent.com/oauth2callback'
   flow.params['access_type'] = 'offline'
   flow.params['prompt'] = 'consent'
   args = []
