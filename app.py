@@ -109,6 +109,7 @@ def oauth2callback():
   flow = client.flow_from_clientsecrets(
       'credentials.json', SCOPES
   )
+  http=None
   credential = flow.step2_exchange(code, http=http)
   with open('token.pickle', 'wb') as token:
       pickle.dump(credential, token)
