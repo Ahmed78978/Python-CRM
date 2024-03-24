@@ -124,8 +124,9 @@ def authenticate():
     # created automatically when the authorization flow completes for the first
     # time.
     creds = None
-    if os.path.exists('tokens.json'):
-        creds = Credentials.from_authorized_user_file('tokens.json')
+    if os.path.exists('token.pickle'):
+        with open('token.pickle', 'rb') as token:
+            creds = pickle.load(token)
 
     # Check if the credentials are expired and have a refresh token
     if creds and creds.expired and creds.refresh_token:
@@ -135,6 +136,8 @@ def authenticate():
         # Save the refreshed credentials back to the file
         with open('token.pickle', 'wb') as token:
             pickle.dump(creds, token)
+        return creds
+    else:
         return creds
 
 previous_email_ids = set()
