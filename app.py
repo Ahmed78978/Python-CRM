@@ -528,7 +528,7 @@ def login():
         print(user)
         user = Users.query.filter_by(username=username).first()
 
-        if user and Users.password== password:
+        if user and user.password== password:
 
             login_user(user)
             return redirect(url_for('index'))
@@ -564,7 +564,7 @@ def register():
             if user:
                 flash('CashAPP already exists')
             else:
-                new_user = User(username=username, password=password, is_admin=is_admin,
+                new_user = Users(username=username, password=password, is_admin=is_admin,
                                 cashapp_username=cashapp_username)
                 db.session.add(new_user)
                 db.session.commit()
