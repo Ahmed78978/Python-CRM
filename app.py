@@ -357,7 +357,7 @@ def update_database():
             print("amount: ",amount, flush=True)
 
             # Fetch customer from database and update balance
-            customer = User.query.filter_by(cashapp_username=payment_from_name).first()
+            customer = Users.query.filter_by(cashapp_username=payment_from_name).first()
             if customer:
                 customer_email = customer.username
                 customer=Customer.query.filter_by(email=customer_email).first()
@@ -397,7 +397,7 @@ class Transaction(db.Model):
     description = db.Column(db.String(255))
     customer_id = db.Column(db.Integer, db.ForeignKey('customer.id'), nullable=False)
 
-class User(UserMixin, db.Model):
+class Users(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(30), unique=True, nullable=False)
     password = db.Column(db.String(80), nullable=False)
@@ -513,7 +513,7 @@ def load_user(id):
             user = db.session.get(User, int(id))
             break
         except:
-            pass
+            return redirect(url_for('login'))
     return user
 
 
@@ -524,11 +524,11 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        user = User.query.filter_by(is_admin=1).first()
+        user = Users.query.filter_by(is_admin=1).first()
         print(user)
-        user = User.query.filter_by(username=username).first()
+        user = Users.query.filter_by(username=username).first()
 
-        if user and user.password== password:
+        if user and Users.password== password:
 
             login_user(user)
             return redirect(url_for('index'))
@@ -555,12 +555,12 @@ def register():
             #return('CashApp username is required')
 
 
-        existing_user = User.query.filter_by(username=username).first()
+        existing_user = Users.query.filter_by(username=username).first()
         if existing_user:
             print('exist')
             flash('User already exists')
         else:
-            user = User.query.filter_by(cashapp_username=cashapp_username).first()
+            user = Users.query.filter_by(cashapp_username=cashapp_username).first()
             if user:
                 flash('CashAPP already exists')
             else:
