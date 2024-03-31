@@ -527,7 +527,7 @@ def login():
         user = Users.query.filter_by(is_admin=1).first()
         print(user)
         user = Users.query.filter_by(username=username).first()
-
+        print(user.password)
         if user and user.password== password:
 
             login_user(user)
@@ -535,6 +535,7 @@ def login():
         #return 'Invalid username or password'
         flash('Invalid username or password')
     return render_template('login.html')
+
 
 
 @app.route('/register', methods=['GET', 'POST'])
