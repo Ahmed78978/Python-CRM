@@ -26,7 +26,7 @@ scheduler.init_app(app)
 scheduler.start()
 # Replace this with your MySQL database details
 username = 'mysql'
-password = 'A7TZ65MmpEm/DuCqhEhTTkphLb7C7WJEKrg9s7UgQzg='
+password = 'nqXQ0ur6kodwkHe2ZryxEEHOMYvkY9w0PdJmrXFW1sM='
 hostname = 'mysql-gaaq'  # Use the actual hostname from the image you provided
 port = '3306'  # Use the actual port if different
 database = 'mysql'
