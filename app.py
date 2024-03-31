@@ -435,7 +435,7 @@ def daily_balance_updates():
         print(a)
 
 
-
+daily_balance_updates()
 
 
 @app.route('/admin/customer', methods=['GET', 'POST'])
