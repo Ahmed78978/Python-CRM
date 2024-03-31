@@ -513,7 +513,7 @@ def load_user(id):
             user = db.session.get(User, int(id))
             break
         except:
-            return redirect(url_for('login'))
+            return None
     return user
 
 
