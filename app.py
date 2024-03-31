@@ -510,7 +510,7 @@ def load_user(id):
     user = None
     for x in range(6):
         try:
-            user = db.session.get(User, int(id))
+            user = db.session.get(Users, int(id))
             break
         except:
             return None
