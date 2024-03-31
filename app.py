@@ -404,38 +404,9 @@ class Users(UserMixin, db.Model):
     is_admin = db.Column(db.Boolean, default=False)
     cashapp_username = db.Column(db.String(50),  nullable=False)
 
-from datetime import datetime, timedelta
-
-run=0
-def daily_balance_updates():
-    global run
-
-    with app.app_context():
-
-        # Generate dates from 2024-03-23 to 2024-03-30
-        start_date = datetime(2024, 3, 23)
-        end_date = datetime(2024, 3, 30)
-        delta = timedelta(days=1)
-        dates = [start_date + i * delta for i in range((end_date - start_date).days + 1)]
-
-        customers = Customer.query.all()  # Fetch all customer records
-        for customer in customers:
-            if (run > 0):
-                break
-            for date in dates:
-                customer.current_balance += customer.daily_rate  # Increase balance by daily rate
-                # Create a transaction record for each update
-                new_transaction = Transaction(date=date, amount=customer.daily_rate, description='Daily rate addition',
-                                              customer_id=customer.id)
-                db.session.add(new_transaction)
-
-        db.session.commit()  # Commit changes to the database
-        print("Updated customer balances based on daily rates.")
-        run+=1
-        print(a)
 
 
-daily_balance_updates()
+
 
 
 @app.route('/admin/customer', methods=['GET', 'POST'])
