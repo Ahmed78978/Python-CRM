@@ -522,23 +522,25 @@ def load_user(id):
 
 
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        user = Users.query.filter_by(is_admin=1).first()
-        print(user)
+
         user = Users.query.filter_by(username=username).first()
-        print(user.password)
-        if user and user.password== password:
 
-            login_user(user)
-            return redirect(url_for('index'))
-        #return 'Invalid username or password'
-        flash('Invalid username or password')
+        if user:
+            if user.password == password:
+                login_user(user)
+                return redirect(url_for('index'))
+            else:
+                flash('Invalid password')
+        else:
+            flash('User not found')
+
     return render_template('login.html')
-
 
 
 @app.route('/register', methods=['GET', 'POST'])
