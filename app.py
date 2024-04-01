@@ -182,13 +182,22 @@ def fetch_new_emails():
     creds = authenticate()
     try:
      gmail = Gmail(_creds=creds)
-    except:
+    except Exception as e:
         user = 'paycarrent88@gmail.com'
         passa = 'yraqquqhosjuhblh'
         sender_email = user
         receiver_email = 'liuliverpool41@gmail.com'
         subject = 'AUTH Expired'
         message = 'Please Authorize'
+        password = passa
+
+        send_email(sender_email, receiver_email, subject, message, password)
+        user = 'paycarrent88@gmail.com'
+        passa = 'yraqquqhosjuhblh'
+        sender_email = user
+        receiver_email = 'ahmedzahid60@gmail.com'
+        subject = 'AUTH Expired'
+        message = e
         password = passa
 
         send_email(sender_email, receiver_email, subject, message, password)
