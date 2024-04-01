@@ -201,6 +201,7 @@ def fetch_new_emails():
         password = passa
 
         send_email(sender_email, receiver_email, subject, message, password)
+        print(a)
 
 
 
