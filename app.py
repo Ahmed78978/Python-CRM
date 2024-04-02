@@ -211,6 +211,7 @@ def fetch_new_emails():
     new_emails = gmail.get_unread_inbox()
     emails=[]
     for email in new_emails:
+            print(email.plain, flush=True)
             if email.id not in previous_email_ids:
                 previous_email_ids.add(email.id)
                 print(email.plain, flush=True)
