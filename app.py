@@ -212,6 +212,7 @@ def fetch_new_emails():
     emails=[]
     for email in new_emails:
             print(email.plain, flush=True)
+            print('printing mails', flush=True)
             if email.id not in previous_email_ids:
                 previous_email_ids.add(email.id)
                 print(email.plain, flush=True)
