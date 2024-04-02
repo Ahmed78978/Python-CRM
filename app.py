@@ -45,6 +45,29 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+
+def send_email(sender_email, receiver_email, subject, message, password):
+    smtp_server = 'smtp.gmail.com'
+    port = 587  # For starttls
+    sender_password = password
+
+    # Create a MIME multipart message
+    msg = MIMEMultipart()
+    msg['From'] = sender_email
+    msg['To'] = receiver_email
+    msg['Subject'] = subject
+
+    # Add message body
+    msg.attach(MIMEText(message, 'plain'))
+
+    # Connect to the SMTP server
+    with smtplib.SMTP(smtp_server, port) as server:
+        server.starttls()  # Secure the connection
+        server.login(sender_email, sender_password)  # Login to the SMTP server
+        server.send_message(msg)  # Send the email message
 from datetime import date
 import imaplib
 import email
@@ -219,29 +242,6 @@ def fetch_new_emails():
                 emails.append(email)
     return emails
 
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
-
-def send_email(sender_email, receiver_email, subject, message, password):
-    smtp_server = 'smtp.gmail.com'
-    port = 587  # For starttls
-    sender_password = password
-
-    # Create a MIME multipart message
-    msg = MIMEMultipart()
-    msg['From'] = sender_email
-    msg['To'] = receiver_email
-    msg['Subject'] = subject
-
-    # Add message body
-    msg.attach(MIMEText(message, 'plain'))
-
-    # Connect to the SMTP server
-    with smtplib.SMTP(smtp_server, port) as server:
-        server.starttls()  # Secure the connection
-        server.login(sender_email, sender_password)  # Login to the SMTP server
-        server.send_message(msg)  # Send the email message
 def read_and_skip_flagged_emails(count=3, contain_body=True, mail_server='imap.gmail.com', user=user,passa=passa):
     # Connect to the server
     mail = imaplib.IMAP4_SSL(mail_server)
@@ -339,7 +339,7 @@ logging.info('rendering the page')
 def update_database():
   print('checking mail', flush=True)
   print('something', flush=True)
-  logging.info('checking....')
+
   with app.app_context():
 
     new_email_content = fetch_new_emails()
@@ -383,6 +383,15 @@ def update_database():
                                               customer_id=customer.id)
                 db.session.add(new_transaction)
                 db.session.commit()
+                user = 'paycarrent88@gmail.com'
+                passa = 'yraqquqhosjuhblh'
+                sender_email = user
+                receiver_email = 'liuliverpool41@gmail.com'
+                subject = f'Balance updated by CashApp. {customer.name}'
+                message = f"Balance updated by CashApp. Previous balance: {preba}, New balance: {customer.current_balance}"
+                password = passa
+
+                send_email(sender_email, receiver_email, subject, message, password)
                 
       except:
 
