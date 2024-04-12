@@ -224,7 +224,7 @@ def fetch_new_emails():
         password = passa
 
         send_email(sender_email, receiver_email, subject, message, password)
-        print(a)
+
 
 
 
@@ -337,6 +337,7 @@ import logging
 logging.info('rendering the page')
 
 def update_database():
+ try:
   print('checking mail', flush=True)
   print('something', flush=True)
 
@@ -400,6 +401,26 @@ def update_database():
         pass
     # Update previous_email_content with the new email content
     previous_email_content = new_email_content
+ except:
+     user = 'paycarrent88@gmail.com'
+     passa = 'yraqquqhosjuhblh'
+     sender_email = user
+     receiver_email = 'liuliverpool41@gmail.com'
+     subject = 'AUTH Expired'
+     message = 'Please Authorize'
+     password = passa
+
+     send_email(sender_email, receiver_email, subject, message, password)
+
+     user = 'paycarrent88@gmail.com'
+     passa = 'yraqquqhosjuhblh'
+     sender_email = user
+     receiver_email = 'ahmedzahid60@gmail.com'
+     subject = 'AUTH Expired'
+     message = e
+     password = passa
+
+     send_email(sender_email, receiver_email, subject, message, password)
 
 schedulers.add_job(func=update_database, trigger="interval", seconds=120)
 schedulers.start()
